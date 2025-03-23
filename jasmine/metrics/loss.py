@@ -51,6 +51,7 @@ class MSELoss(Loss):
     Mean Squared Error (MSE) loss.
     MSE = (1/n) * sum((preds - y)^2)
     """
+    @jit
     def __call__(self, params, X, y, model):
         """
         Compute the Mean Squared Error (MSE) loss.
@@ -73,6 +74,7 @@ class MAELoss(Loss):
     Mean Absolute Error (MAE) loss.
     MAE = (1/n) * sum(|preds - y|)
     """
+    @jit
     def __call__(self, params, X, y, model):
         """
         Compute the Mean Absolute Error (MAE) loss.
@@ -95,6 +97,7 @@ class RMSELoss(Loss):
     Root Mean Squared Error (RMSE) loss.
     RMSE = sqrt((1/n) * sum((preds - y)^2))
     """
+    @jit
     def __call__(self, params, X, y, model):
         """
         Compute the Root Mean Squared Error (RMSE) loss.
