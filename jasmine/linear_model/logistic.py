@@ -28,10 +28,29 @@ class LogisticRegression:
         Returns:
             jnp.ndarray: Predicted probabilities
         """
-        if self.fit_intercept:
-            return jax.nn.sigmoid(jnp.dot(X, params[1:]) + params[0])
+        logits = jnp.dot(X, params[1:]) + params[0] if self.fit_intercept else jnp.dot(X, params)
+        # Apply sigmoid for binary classification, softmax for multi-class
+        if logits.ndim == 1 or logits.shape[1] == 1:
+            return jax.nn.sigmoid(logits)
         else:
-            return jax.nn.sigmoid(jnp.dot(X, params))
+            return jax.nn.softmax(logits)
+
+    @jit
+    def _update_params(self, params, X, y, learning_rate):
+        """
+        Update model parameters using gradient descent. This helper function is JIT-compiled.
+
+        Args:
+            params (jnp.ndarray): Current model parameters.
+            X (jnp.ndarray): Input features.
+            y (jnp.ndarray): Target values.
+            learning_rate (float): Learning rate for gradient descent.
+        
+        Returns:
+            jnp.ndarray: Updated parameters.
+        """
+        grads = self.loss.grad(params, X, y, self)
+        return params - learning_rate * grads 
     
     def fit(self, X, y, learning_rate=0.01, max_iter=1000, tol=1e-4):
         """
@@ -56,10 +75,8 @@ class LogisticRegression:
         # Gradient descent loop
         prev_loss = float('inf')
         for i in range(max_iter):
-            # Compute gradients
-            grads = self.loss.grad(params, X, y, self)
-            # Update parameters
-            params -= learning_rate * grads
+            # Use the _update_params helper function to update parameters
+            params = self._update_params(params, X, y, learning_rate)
             # Compute loss
             current_loss = self.loss(params, X, y, self)
             # Check for convergence
@@ -103,7 +120,12 @@ class LogisticRegression:
             jnp.ndarray: Predicted class labels
         """
         proba = self.predict_proba(X)
-        return (proba >= 0.5).astype(jnp.int32)
+        if proba.ndim == 1 or proba.shape[1] == 1:
+            # For binary classification, return 0 or 1 based on threshold 0.5
+            return (proba >= 0.5).astype(jnp.int32)
+        else:
+            # For multi-class classification, return the index of the max probability
+            return jnp.argmax(proba, axis=1).astype(jnp.int32)
     
     def score(self, X, y):
         """
