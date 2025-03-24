@@ -57,7 +57,7 @@ class LinearRegression:
         prev_loss = float('inf')
         for i in range(max_iter):
             # Compute gradients
-            grads = self.loss.grad(params, X, y, self)
+            grads = self.loss.compute_grad(params, X, y, self)
             
             # Update parameters
             params = params - learning_rate * grads
