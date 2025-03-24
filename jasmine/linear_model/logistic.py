@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 from jax import grad, jit
-from metrics import CrossEntropyLoss
+from ..metrics import CrossEntropyLoss
 
 class LogisticRegression:
     def __init__(self, fit_intercept=True, loss=CrossEntropyLoss):
@@ -35,7 +35,7 @@ class LogisticRegression:
         else:
             return jax.nn.softmax(logits)
 
-    @jit
+    
     def _update_params(self, params, X, y, learning_rate):
         """
         Update model parameters using gradient descent. This helper function is JIT-compiled.
