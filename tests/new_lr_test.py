@@ -62,8 +62,8 @@ def test_no_bias_regression():
     model.train(X, y)
     
     predictions = model.inference(X)
-    mse = jnp.mean((predictions - y) ** 2)
-    
+    mse = model.evaluate(X, y, metrics_fn="mean_squared_error")
+    print(f"\nResults: {mse:.6f}")
     print(f"True weights: {true_weights}")
     print(f"Learned weights: {model.params['w']}")
     print(f"Bias: {model.params['b']}")
