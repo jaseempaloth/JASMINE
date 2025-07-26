@@ -110,4 +110,18 @@ class LinearRegression:
         self.params = current_params
         return self
         
+    def inference(self, X):
+        """
+        Make predictions using the trained model.
+        
+        Args:
+            X (jnp.ndarray): Input features
+            
+        Returns:
+            jnp.ndarray: Predicted values
+        """
+        if self.params is None:
+            raise ValueError("Model has not been trained yet. Call `train` before calling `inference`.")
+        
+        return self.forward(self.params, X)
 
