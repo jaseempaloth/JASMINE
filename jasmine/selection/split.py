@@ -19,7 +19,7 @@ def train_test_split(X, y, test_size=0.2, shuffle=True, random_state=None):
         raise ValueError("test_size must be between 0.0 and 1.0")
     
     n_samples = X.shape[0]
-    n_test = int(n_samples * test_size)
+    n_test = max(1, int(n_samples * test_size))  # Ensure at least 1 test sample
     n_train = n_samples - n_test
 
     indices = jnp.arange(n_samples)
