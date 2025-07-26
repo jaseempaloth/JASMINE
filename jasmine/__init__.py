@@ -23,7 +23,7 @@ __license__ = 'MIT'
 # Core imports
 from .linear_model import LinearRegression, LogisticRegression
 from .metrics import MSELoss, MAELoss, RMSELoss, CrossEntropyLoss
-from .preprocessing import train_test_split
+from .selection import train_test_split
 
 # Public API
 __all__ = [
