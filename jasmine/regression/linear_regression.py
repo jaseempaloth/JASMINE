@@ -1,6 +1,6 @@
 import jax 
 import jax.numpy as jnp
-from ..metrics._regression import mean_squared_error, mean_absolute_error, root_mean_squared_error
+from ..metrics._regression import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
 
 class LinearRegression:
     def __init__(self, use_bias=True, learning_rate=0.01, n_epochs=1000, loss_function=mean_squared_error):
@@ -124,4 +124,26 @@ class LinearRegression:
             raise ValueError("Model has not been trained yet. Call `train` before calling `inference`.")
         
         return self.forward(self.params, X)
+    
+    def evaluate(self, X, y, metrics=r2_score):
+        """
+        Evaluate the model using specified metrics.
+        
+        Args:
+            X (jnp.ndarray): Input features
+            y (jnp.ndarray): Target values
+            metrics (callable): Metric function to evaluate the model
+            
+        Returns:
+            float: Computed metric value
+        """
+        if self.params is None:
+            raise ValueError("Model has not been trained yet. Call `train` before calling `evaluate`.")
+        
+        predictions = self.inference(X)
+        return metrics(y, predictions)
+        
+
+        
+    
 
