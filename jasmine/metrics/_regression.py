@@ -39,3 +39,18 @@ def root_mean_squared_error(y_true, y_pred):
         float: Computed RMSE value.
     """
     return jnp.sqrt(mean_squared_error(y_true, y_pred))
+
+def r2_score(y_true, y_pred):
+    """
+    Compute the R² score (coefficient of determination) between true and predicted values.
+    
+    Args:
+        y_true (jnp.ndarray): True target values.
+        y_pred (jnp.ndarray): Predicted target values.
+        
+    Returns:
+        float: Computed R² score.
+    """
+    ss_res = jnp.sum(jnp.square(y_true - y_pred))
+    ss_tot = jnp.sum(jnp.square(y_true - jnp.mean(y_true)))
+    return 1 - (ss_res / ss_tot) if ss_tot != 0 else 0.0
