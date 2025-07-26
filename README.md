@@ -32,8 +32,8 @@ pip install -r requirements.txt
 
 ```python
 import jax.numpy as jnp
-from jasmine.linear_model import LinearRegression
-from jasmine.metrics import MSELoss
+from jasmine import LinearRegression
+from jasmine import MSELoss
 
 # Create synthetic data
 X = jnp.array([[1, 2], [3, 4], [5, 6]])
@@ -56,8 +56,8 @@ print(f"R² Score: {r2_score}")
 
 ```python
 import jax.numpy as jnp
-from jasmine.linear_model import LogisticRegression
-from jasmine.metrics import CrossEntropyLoss
+from jasmine import LogisticRegression
+from jasmine import CrossEntropyLoss
 
 # Create synthetic data
 X = jnp.array([[1, 2], [2, 3], [3, 4], [4, 5]])
