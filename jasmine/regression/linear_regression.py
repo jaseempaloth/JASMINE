@@ -124,8 +124,8 @@ class LinearRegression:
             raise ValueError("Model has not been trained yet. Call `train` before calling `inference`.")
         
         return self.forward(self.params, X)
-    
-    def evaluate(self, X, y, metrics=r2_score):
+
+    def evaluate(self, X, y, metrics_fn=r2_score):
         """
         Evaluate the model using specified metrics.
         
@@ -141,7 +141,7 @@ class LinearRegression:
             raise ValueError("Model has not been trained yet. Call `train` before calling `evaluate`.")
         
         predictions = self.inference(X)
-        return metrics(y, predictions)
+        return metrics_fn(y, predictions)
         
 
         

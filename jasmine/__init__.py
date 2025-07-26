@@ -21,21 +21,16 @@ __email__ = 'jaseem@jaseempaloth.com'
 __license__ = 'MIT'
 
 # Core imports
-from .linear_model import LinearRegression, LogisticRegression
-from .metrics import MSELoss, MAELoss, RMSELoss, CrossEntropyLoss
+from .metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
 from .selection import train_test_split
 from .regression import LinearRegression
 # Public API
 __all__ = [
-    # Linear Models
     'LinearRegression',
-    'LogisticRegression',
-    # Loss Functions
-    'MSELoss',
-    'MAELoss', 
-    'RMSELoss',
-    'CrossEntropyLoss',
-    # Preprocessing
-    'train_test_split'
+    'train_test_split',
+    'mean_squared_error',
+    'mean_absolute_error',
+    'root_mean_squared_error',
+    'r2_score'
 ]
 
