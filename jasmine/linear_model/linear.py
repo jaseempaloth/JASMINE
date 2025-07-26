@@ -29,9 +29,9 @@ class LinearRegression:
             jnp.ndarray: Predicted values
         """
         if self.fit_intercept:
-            return jnp.dot(X, params[1:]) + params[0]
+            return jnp.dot(X, params['weights']) + params['intercept'][0]
         else:
-            return jnp.dot(X, params)
+            return jnp.dot(X, params['weights'])
 
     def fit(self, X, y, learning_rate=0.01, max_iter=1000, tol=1e-4):
         """
@@ -49,9 +49,9 @@ class LinearRegression:
         """
         # Initialize parameters
         if self.fit_intercept:
-            params = jnp.zeros(X.shape[1] + 1)
+            params = {'weights': jnp.zeros(X.shape[1]), 'intercept': jnp.array([0.0])}
         else:
-            params = jnp.zeros(X.shape[1])
+            params = {'weights': jnp.zeros(X.shape[1])}
         
         # Gradient descent loop
         prev_loss = float('inf')
@@ -60,7 +60,8 @@ class LinearRegression:
             grads = self.loss.compute_grad(params, X, y, self)
             
             # Update parameters
-            params = params - learning_rate * grads
+            for key in params:
+                params[key] = params[key] - learning_rate * grads[key]
 
             # Check for convergence
             current_loss = self.loss(params, X, y, self)
@@ -71,10 +72,10 @@ class LinearRegression:
         self.params_ = params
 
         if self.fit_intercept:
-            self.intercept_ = self.params_[0]
-            self.coef_ = self.params_[1:]
+            self.intercept_ = self.params_['intercept'][0]
+            self.coef_ = self.params_['weights']
         else:
-            self.coef_ = self.params_
+            self.coef_ = self.params_['weights']
         
         return self
     
