@@ -24,7 +24,7 @@ __license__ = 'MIT'
 from .linear_model import LinearRegression, LogisticRegression
 from .metrics import MSELoss, MAELoss, RMSELoss, CrossEntropyLoss
 from .selection import train_test_split
-
+from .regression import LinearRegression
 # Public API
 __all__ = [
     # Linear Models
