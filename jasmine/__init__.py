@@ -1,21 +1,41 @@
 """
-JASMINE - Python package for machine learning algorithms
+JASMINE - JAX Accelerated Statistical Models and Integrated Neural Engine
 
-This package provides tools and utilities for implementing various machine learning algorithms.
+A lightweight, high-performance machine learning library built on JAX with GPU/TPU 
+acceleration support for scalable ML workflows. JASMINE provides an accessible 
+interface to JAX's powerful capabilities with automatic differentiation, JIT 
+compilation, and hardware acceleration.
+
+Features:
+- Linear models (Linear Regression, Logistic Regression)
+- Comprehensive loss functions (MSE, MAE, RMSE, Cross-Entropy)
+- Data preprocessing utilities (train/test split)
+- Automatic differentiation using JAX
+- JIT compilation for improved performance
+- GPU/TPU acceleration support
 """
 
 __version__ = '0.1.0'
 __author__ = 'Jaseem Paloth'
+__email__ = 'jaseem@jaseempaloth.com'
+__license__ = 'MIT'
 
-
+# Core imports
 from .linear_model import LinearRegression, LogisticRegression
 from .metrics import MSELoss, MAELoss, RMSELoss, CrossEntropyLoss
+from .preprocessing import train_test_split
 
-__all__ = ['LinearRegression',
-            'LogisticRegression'
-            'MSELoss',
-            'MAELoss',
-            'RMSELoss',
-            'CrossEntropyLoss'
-        ]
+# Public API
+__all__ = [
+    # Linear Models
+    'LinearRegression',
+    'LogisticRegression',
+    # Loss Functions
+    'MSELoss',
+    'MAELoss', 
+    'RMSELoss',
+    'CrossEntropyLoss',
+    # Preprocessing
+    'train_test_split'
+]
 
