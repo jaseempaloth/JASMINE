@@ -1,6 +1,7 @@
 import jax 
 import jax.numpy as jnp
 from ..metrics._regression import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
+import time
 
 class LinearRegression:
     def __init__(self, use_bias=True, learning_rate=0.01, n_epochs=1000, loss_function=mean_squared_error, l1_penalty=0.0, l2_penalty=0.0):
@@ -87,7 +88,7 @@ class LinearRegression:
 
         return loss
 
-    def train(self, X, y):
+    def train(self, X, y, validation_data=None, early_stopping_patience=None, verbose=1):
         """
         Train the linear regression model using gradient descent.
         
@@ -100,6 +101,12 @@ class LinearRegression:
         """ 
         # Initialize parameters
         current_params = self.init_params(X.shape[1])
+        history = {"loss": [], "val_loss": []}
+
+        # Early stopping setup
+        best_val_loss = float('inf')
+        epochs_no_improve = 0
+        best_params = None
 
         # Define the update step as a pure, JIT-compiled function
         @jax.jit
@@ -112,22 +119,48 @@ class LinearRegression:
             )
 
         # Training loop
-        prev_loss = float('inf')
+        start_time = time.time()
         for epoch in range(self.n_epochs):
             # Get the new, updated parameters from the pure function
             current_params = update_step(current_params, X, y)
 
-            if epoch % 100 == 0:
-                loss_value = self.loss_fn(current_params, X, y)
-                print(f"Epoch {epoch}, Loss: {loss_value}")
-                if jnp.abs(loss_value - prev_loss) < 1e-6:
-                    print("Convergence reached.")
-                    break
-            prev_loss = loss_value
+            # Logging and validation
+            train_loss = self.loss_fn(current_params, X, y)
+            history["loss"].append(train_loss)
 
-        # Store the final parameters and return the instance
-        self.params = current_params
-        return self
+            log_message = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
+
+            if validation_data is not None:
+                X_val, y_val = validation_data
+                val_loss = self.loss_fn(current_params, X_val, y_val)
+                history["val_loss"].append(val_loss)
+                log_message += f" - Val Loss: {val_loss:.4f}"
+
+                # Early stopping logic
+                if early_stopping_patience is not None:
+                    if val_loss < best_val_loss:
+                        best_val_loss = val_loss
+                        epochs_no_improve = 0
+                        best_params = current_params
+                    else:
+                        epochs_no_improve += 1
+                    
+                    if epochs_no_improve >= early_stopping_patience:
+                        if verbose > 0:
+                            print(f"Early stopping at epoch {epoch + 1}. Best Val Loss: {best_val_loss:.4f}")
+                        # Restore best parameters if early stopping is triggered
+                        self.params = best_params
+                        return history
+            
+            if verbose > 0:
+                print(log_message, end="\r")
+        
+        if verbose > 0:
+            total_time = time.time() - start_time
+            print(f"\nTraining completed in {total_time:.2f} seconds.")
+        
+        self.params = best_params if best_params is not None else current_params
+        return history
         
     def inference(self, X):
         """
