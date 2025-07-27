@@ -3,13 +3,13 @@ import jax.numpy as jnp
 from ..metrics._regression import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
 
 class LinearRegression:
-    def __init__(self, use_bias=True, learning_rate=0.01, n_epochs=1000, loss_function=mean_squared_error):
+    def __init__(self, use_bias=True, learning_rate=0.01, n_epochs=1000, loss_function=mean_squared_error, l1_penalty=0.0, l2_penalty=0.0):
         self.use_bias = use_bias
         self.learning_rate = learning_rate
         self.n_epochs = n_epochs
         self.loss_function = loss_function
-
-        # Model parameters
+        self.l1_penalty = l1_penalty
+        self.l2_penalty = l2_penalty
         self.params = None
 
     def init_params(self, n_features, key=None):
@@ -71,9 +71,22 @@ class LinearRegression:
         Returns:
             float: Computed loss value
         """
+        # Base loss 
         predictions = self.forward(params, X)
-        return self.loss_function(y, predictions)
-    
+        loss = self.loss_function(y, predictions)
+
+        # Add L2 regularization (Ridge) 
+        if self.l2_penalty > 0.0:
+            l2_loss = self.l2_penalty * jnp.sum(params["w"] ** 2)
+            loss += l2_loss
+
+        # Add L1 regularization (Lasso)
+        if self.l1_penalty > 0.0:
+            l1_loss = self.l1_penalty * jnp.sum(jnp.abs(params["w"]))
+            loss += l1_loss
+
+        return loss
+
     def train(self, X, y):
         """
         Train the linear regression model using gradient descent.
