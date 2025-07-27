@@ -97,7 +97,7 @@ class LinearRegression:
             
         Returns:
             dict: Fitted model parameters
-        """
+        """ 
         # Initialize parameters
         current_params = self.init_params(X.shape[1])
 
@@ -112,6 +112,7 @@ class LinearRegression:
             )
 
         # Training loop
+        prev_loss = float('inf')
         for epoch in range(self.n_epochs):
             # Get the new, updated parameters from the pure function
             current_params = update_step(current_params, X, y)
@@ -119,6 +120,11 @@ class LinearRegression:
             if epoch % 100 == 0:
                 loss_value = self.loss_fn(current_params, X, y)
                 print(f"Epoch {epoch}, Loss: {loss_value}")
+                if jnp.abs(loss_value - prev_loss) < 1e-6:
+                    print("Convergence reached.")
+                    break
+            prev_loss = loss_value
+
         # Store the final parameters and return the instance
         self.params = current_params
         return self
