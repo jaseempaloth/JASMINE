@@ -24,6 +24,7 @@ __license__ = 'MIT'
 from .metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
 from .selection import train_test_split
 from .regression import LinearRegression
+from .datasets import make_regression
 # Public API
 __all__ = [
     'LinearRegression',
@@ -31,6 +32,7 @@ __all__ = [
     'mean_squared_error',
     'mean_absolute_error',
     'root_mean_squared_error',
-    'r2_score'
+    'r2_score',
+    'make_regression'
 ]
 
