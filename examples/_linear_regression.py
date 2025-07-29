@@ -40,8 +40,8 @@ def main():
     # Evaluate the model
     mse = model.evaluate(X_test, y_test, metrics_fn=mean_squared_error)
     r2 = model.evaluate(X_test, y_test)
-    print(f"Test MSE: {mse:.4f}")
-    print(f"Test R²: {r2:.4f}")
+    print(f"MSE: {mse:.4f}")
+    print(f"R²: {r2:.4f}")
 
 
 if __name__ == "__main__":
