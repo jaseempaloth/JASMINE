@@ -2,7 +2,7 @@ import jax
 import jax.numpy as jnp
 import os
 
-def make_regression(n_samples=100, n_features=20, n_informative=10, noise=0.0,
+def generate_regression(n_samples=100, n_features=20, n_informative=10, noise=0.0,
                     bias=0.0, shuffle=True, coef=False, random_state=None):
     """
     Generate a random regression problem with JAX.
@@ -58,4 +58,7 @@ def make_regression(n_samples=100, n_features=20, n_informative=10, noise=0.0,
     if coef:
         return X, y, ground_truth, bias
     else:
-        return X, y   
+        return X, y
+    
+def generate_pol
+
