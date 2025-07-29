@@ -1,5 +1,5 @@
-from .generators import make_regression
+from .generators import generate_regression
 
 __all__ = [
-    'make_regression'
+    'generate_regression'
 ]
