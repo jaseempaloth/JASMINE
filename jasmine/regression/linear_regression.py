@@ -194,8 +194,3 @@ class LinearRegression:
         
         predictions = self.inference(X)
         return metrics_fn(y, predictions)
-        
-
-        
-    
-
