@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 import jax.nn
-from jasmine.metrics import binary_cross_entropy
+from jasmine.metrics import binary_cross_entropy, accuracy_score
 import time
 import os
 
@@ -149,8 +149,50 @@ class LogisticRegression:
         self.params = best_params if best_params is not None else current_params
         return history
     
-    
-
+    def predict_probabilities(self, X):
+        """
+        Predict probabilities for the input features.
         
+        Args:
+            X (jnp.ndarray): Input features
+            
+        Returns:
+            jnp.ndarray: Predicted probabilities
+        """
+        if self.params is None:
+            raise ValueError("Model has not been trained yet. Call `train` before calling `predict_probabilities`.")
+        
+        return self.forward(self.params, X)
+    
+    def inference(self, X, threshold=0.5):
+        """
+        Perform inference on the input features.
+        
+        Args:
+            X (jnp.ndarray): Input features
+            
+        Returns:
+            jnp.ndarray: Predicted class labels
+        """
+        probabilities = self.predict_probabilities(X)
+        return (probabilities >= threshold).astype(int)
+
+    def evaluate(self, X, y, metrics_fn=accuracy_score):
+        """
+        Evaluate the model using the specified metrics function.
+        
+        Args:
+            X (jnp.ndarray): Input features
+            y (jnp.ndarray): True labels
+            metrics_fn (callable): Metrics function to compute the score
+            
+        Returns:
+            float: Computed metrics score
+        """
+        if self.params is None:
+            raise ValueError("Model has not been trained yet. Call `train` before calling `evaluate`.")
+        
+        class_predictions = self.inference(X)
+        return metrics_fn(y, class_predictions)
 
         
