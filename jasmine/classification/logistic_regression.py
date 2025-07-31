@@ -32,8 +32,7 @@ class LogisticRegression:
             "w": jax.random.normal(w_key, (n_features,))
         }
         if self.use_bias:
-            params["b"] = jnp.array(0.0)
-        
+            params["b"] = jnp.array(0.0)        
         return params
     
     @staticmethod
@@ -47,14 +46,13 @@ class LogisticRegression:
         """
         use_bias = "b" in params and params["b"] is not None
         if params["w"] is None:
-            raise ValueError("Model weights must be initialized before calling forward.")
+            raise ValueError("Model weights must be initialized before calling 'forward'.")
         
         # Calculate the linear combination (logits)
         logits = X @ params["w"]
         if use_bias:
-            logits += params["b"]
-        
-        return jax.nn.sigmoid(logits)
+            logits += params["b"]      
+        return logits
 
     def loss_fn(self, params, X, y):
         """
@@ -68,8 +66,8 @@ class LogisticRegression:
         Returns:
             jnp.ndarray: Computed loss value
         """
-        predictions = self.forward(params, X)
-        loss = self.loss_function(y, predictions)
+        logits = self.forward(params, X)
+        loss = self.loss_function(y, logits, from_logits=True)
 
         # Add L2 regularization (Ridge) 
         if self.l2_penalty > 0.0:
@@ -114,7 +112,6 @@ class LogisticRegression:
         start_time = time.time()
         for epoch in range(self.n_epochs):
             current_params = update_step(current_params, X, y)
-
             train_loss = self.loss_fn(current_params, X, y)
             history["loss"].append(train_loss)
             log_msg = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
@@ -162,7 +159,8 @@ class LogisticRegression:
         if self.params is None:
             raise ValueError("Model has not been trained yet. Call `train` before calling `predict_probabilities`.")
         
-        return self.forward(self.params, X)
+        logits = self.forward(self.params, X)
+        return jax.nn.sigmoid(logits)
     
     def inference(self, X, threshold=0.5):
         """
