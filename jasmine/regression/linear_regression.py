@@ -1,6 +1,6 @@
 import jax 
 import jax.numpy as jnp
-from ..metrics._regression import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
+from jasmine.metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
 import time
 
 class LinearRegression:
