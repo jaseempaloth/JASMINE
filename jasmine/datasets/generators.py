@@ -109,5 +109,68 @@ def generate_polynomial(n_samples: int = 100,
     else:
         return X, y
 
+def generate_classification(n_samples: int = 100,
+                            n_features: int = 20,
+                            n_informative: int = 5,
+                            n_redundant: int = 2,
+                            n_classes: int = 2,
+                            class_sep: float = 1.0,
+                            shuffle: bool = True,
+                            random_state: int = None):
+    """
+    Generate a random n-class classification problem with.
 
+    This function creates clusters of points normally distributed around vertices
+    of a hypercube, making it suitable for testing classification algorithms.
+
+    Args:
+        n_samples: The number of samples.
+        n_features: The total number of features.
+        n_informative: The number of informative features.
+        n_redundant: The number of redundant features (linear combinations of informative features).
+        n_classes: The number of classes (or labels).
+        class_sep: Factor multiplying the hypercube size. Larger values spread
+                   out the classes and make the problem easier.
+        shuffle: Whether to shuffle the features.
+        random_state: Seed for the random number generator.
+
+    Returns:
+        A tuple (X, y) where X is the feature matrix and y are the integer labels.
+    """
+    if n_informative + n_redundant > n_features:
+        raise ValueError(f"n_informative ({n_informative}) + n_redundant ({n_redundant}) cannot be greater than n_features ({n_features})")
+    
+    if random_state is None:
+        random_state = int.from_bytes(os.urandom(4), 'big')
+    
+    key = jax.random.PRNGKey(random_state)
+    key, centroid_key, x_key, redundant_key, shuffle_key = jax.random.split(key, 5)
+
+    # Define centroids for each class at the vertices of a hypercube
+    centroids = jax.random.choice(centroid_key, jnp.array([-class_sep, class_sep]),
+                                  shape=(n_classes, n_features))
+
+    # Assign samples to classes
+    y = jax.random.randint(key, (n_samples,), 0, n_classes)
+
+    # Create informative features by adding noise to class centroids
+    X = X.at[:, :n_informative].set(centroids[y] + jax.random.normal(x_key, (n_samples, n_informative)))
+
+    # Create redundant features
+    if redundant_key > 0:
+        w_redundant = jax.random.normal(redundant_key, (n_redundant, n_informative))
+        redundant_features = X[:, :n_informative] @ w_redundant
+        X = X.at[:, n_informative:n_informative + n_redundant].set(redundant_features)
+    
+    # Fill remaining features with noise
+    n_noise = n_features - n_informative - n_redundant
+    if n_noise > 0:
+        noise_features = jax.random.normal(key, (n_samples, n_noise))
+        X = X.at[:, -n_noise:].set(noise_features)
+    
+    if shuffle:
+        X = jax.random.permutation(shuffle_key, X)
+    
+    return X, y
+        
 
