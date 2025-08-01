@@ -119,35 +119,51 @@ class LogisticRegression:
             )
 
         start_time = time.time()
-        for epoch in range(self.n_epochs):
-            current_params = update_step(current_params, X, y)
-            train_loss = self.loss_fn(current_params, X, y)
-            history["loss"].append(train_loss)
-            log_msg = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
-
-            if validation_data is not None:
-                X_val, y_val = validation_data
-                val_loss = self.loss_fn(current_params, X_val, y_val)
-                history["val_loss"].append(val_loss)
-                log_msg += f" - Val Loss: {val_loss:.4f}"
-
-                if early_stopping_patience is not None:
-                    if val_loss < best_val_loss:
-                        best_val_loss = val_loss
-                        epochs_no_improve = 0
-                        best_params = current_params
-                    else:
-                        epochs_no_improve += 1
-                    
-                    if epochs_no_improve >= early_stopping_patience:
-                        if verbose > 0:
-                            print(f"\nEarly stopping triggered after {epoch+1} epochs.")
-                        self.params = best_params
-                        return history
-            
-            if verbose > 0:
-                print(log_msg, end='\r')
+        print_interval = max(1, self.n_epochs // 10) if verbose > 0 else self.n_epochs
         
+        for epoch in range(self.n_epochs):
+            try:
+                current_params = update_step(current_params, X, y)
+                train_loss = self.loss_fn(current_params, X, y)
+                # Check for NaN or Inf in loss
+                if jnp.isnan(train_loss) or jnp.isinf(train_loss):
+                    print(f"Loss is NaN or Inf at epoch {epoch + 1}. Stopping training.")
+                    break
+
+                history["loss"].append(train_loss)
+                log_msg = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
+
+                # Validation step
+                if validation_data is not None:
+                    X_val, y_val = validation_data
+                    val_loss = self.loss_fn(current_params, X_val, y_val)
+                    history["val_loss"].append(val_loss)
+                    log_msg += f" - Val Loss: {val_loss:.4f}"
+
+                    if early_stopping_patience is not None:
+                        if val_loss < best_val_loss:
+                            best_val_loss = val_loss
+                            epochs_no_improve = 0
+                            best_params = current_params
+                        else:
+                            epochs_no_improve += 1
+                        
+                        if epochs_no_improve >= early_stopping_patience:
+                            if verbose > 0:
+                                print(f"\nEarly stopping triggered after {epoch+1} epochs.")
+                            self.params = best_params
+                            return history
+                
+                if verbose > 0 and (epoch + 1) % print_interval == 0:
+                    log_msg = f"Epoch {epoch + 1:4d}/{self.n_epochs} - Loss: {train_loss:.6f}"
+                    if validation_data is not None:
+                        log_msg += f" - Val Loss: {val_loss:.6f}"
+                    print(log_msg, end='\r')
+
+            except Exception as e:
+                print(f"\nError during training at epoch {epoch + 1}: {e}")
+                break
+
         if verbose > 0:
             total_time = time.time() - start_time
             print(f"\nTraining completed in {total_time:.2f} seconds.")
