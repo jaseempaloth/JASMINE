@@ -153,13 +153,17 @@ def generate_classification(n_samples: int = 100,
     # Assign samples to classes
     y = jax.random.randint(key, (n_samples,), 0, n_classes)
 
+    # Generate features matrix
+    X = jnp.zeros((n_samples, n_features))
+
     # Create informative features by adding noise to class centroids
-    X = X.at[:, :n_informative].set(centroids[y] + jax.random.normal(x_key, (n_samples, n_informative)))
+    informative_centroids = centroids[y][:, :n_informative]
+    X = X.at[:, :n_informative].set(informative_centroids + jax.random.normal(x_key, (n_samples, n_informative)))
 
     # Create redundant features
-    if redundant_key > 0:
+    if n_redundant > 0:
         w_redundant = jax.random.normal(redundant_key, (n_redundant, n_informative))
-        redundant_features = X[:, :n_informative] @ w_redundant
+        redundant_features = X[:, :n_informative] @ w_redundant.T
         X = X.at[:, n_informative:n_informative + n_redundant].set(redundant_features)
     
     # Fill remaining features with noise
