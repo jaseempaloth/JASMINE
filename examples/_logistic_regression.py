@@ -9,7 +9,7 @@ def main():
     X, y = generate_classification(
         n_samples=1000,
         n_features=20,
-        n_informative=5,
+        n_informative=10,
         n_redundant=2,
         n_classes=2,
         class_sep=1.0,
@@ -28,6 +28,19 @@ def main():
     model = LogisticRegression()
     model.train(X_train, y_train)
     print("Model trained successfully.")
+
+    # Learned parameters
+    print("Learned parameters:", model.params["w"])
+    print("Learned Bias:", model.params.get("b", "No bias term"))
+
+    # Make predictions on the test set
+    logits = model.inference(X_test)
+    print(f"Logits shape: {logits.shape}")
+
+    # Evaluate the model
+    accuracy = model.evaluate(X_test, y_test, metrics_fn=accuracy_score)
+    print(f"Accuracy: {accuracy:.4f}")
+
 
 if __name__ == "__main__":
     main()
