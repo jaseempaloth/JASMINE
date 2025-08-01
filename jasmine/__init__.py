@@ -7,12 +7,13 @@ interface to JAX's powerful capabilities with automatic differentiation, JIT
 compilation, and hardware acceleration.
 
 Features:
-- Linear models (Linear Regression, Logistic Regression)
-- Comprehensive loss functions (MSE, MAE, RMSE, Cross-Entropy)
-- Data preprocessing utilities (train/test split)
-- Automatic differentiation using JAX
-- JIT compilation for improved performance
-- GPU/TPU acceleration support
+- Modular and extensible framework supporting diverse machine learning algorithms
+- Core components for model development, training, and evaluation
+- Data preprocessing utilities
+- Automatic differentiation powered by JAX
+- JIT compilation for high-performance training and inference
+- Seamless GPU/TPU acceleration for scalable computation
+- Clean and intuitive API for educational, research, and custom ML use cases
 """
 
 __version__ = '0.1.0'
