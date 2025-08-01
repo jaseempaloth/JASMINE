@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 
-@jax.jit
+
 def binary_cross_entropy(y_true, y_pred, from_logits: bool=False):
     """
     Compute the Binary Cross-Entropy loss between true and predicted values.
