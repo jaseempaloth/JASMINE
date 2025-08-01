@@ -15,9 +15,12 @@ def binary_cross_entropy(y_true, y_pred, from_logits: bool=False):
         float: Computed Binary Cross-Entropy loss.
     """
     if from_logits:
-        # This formula is equivalent to sigmoid followed by binary cross-entropy,
-        # It is more numerically stable.
-        return jnp.mean(jnp.maximum(y_pred, 0) - y_pred * y_true + jnp.log(1 + jnp.exp(-jnp.abs(y_pred))))
+        # Numerically stable calculation using jax.nn.log_sigmoid.
+        # This is equivalent to applying sigmoid and then binary cross-entropy,
+        # but prevents numerical issues with very small or large logits.
+        log_p = jax.nn.log_sigmoid(y_pred)
+        log_not_p = jax.nn.log_sigmoid(-y_pred) # log(1 - sigmoid(x)) = log(sigmoid(-x))
+        return -jnp.mean(y_true * log_p + (1. - y_true) * log_not_p)
 
     # Standard binary cross-entropy with clipping for stability 
     epsilon = 1e-15  # To avoid log(0)
