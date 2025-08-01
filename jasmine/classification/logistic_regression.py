@@ -36,6 +36,7 @@ class LogisticRegression:
         return params
     
     @staticmethod
+    @jax.jit
     def forward(params, X):
         """
         Forward pass for the logistic regression model.
@@ -95,6 +96,14 @@ class LogisticRegression:
         Returns:
             dict: Final model parameters after training
         """
+        # Validate input shapes
+        if X.ndim != 2:
+            raise ValueError(f"Input features X must be a 2D array, got shape {X.shape}.")
+        if y.ndim != 1:
+            raise ValueError(f"Target labels y must be a 1D array, got shape {y.shape}.")
+        if X.shape[0] != y.shape[0]:
+            raise ValueError(f"Number of samples in X ({X.shape[0]}) must match number of samples in y ({y.shape[0]}).")
+        
         current_params = self.init_params(X.shape[1])
         history = {"loss": [], "val_loss": []}
 
