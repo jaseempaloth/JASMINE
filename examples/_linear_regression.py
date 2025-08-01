@@ -2,11 +2,11 @@ import jax
 import jax.numpy as jnp
 from jasmine import LinearRegression, mean_squared_error
 from jasmine.selection import train_test_split
-from jasmine.datasets import make_regression
+from jasmine.datasets import generate_regression
 
 def main():
     # Generate synthetic regression data
-    X, y = make_regression(
+    X, y = generate_regression(
         n_samples=1000,
         n_features=20,
         n_informative=5,
