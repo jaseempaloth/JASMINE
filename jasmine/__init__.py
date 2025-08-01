@@ -21,19 +21,27 @@ __email__ = 'jaseem@jaseempaloth.com'
 __license__ = 'MIT'
 
 # Core imports
-from .metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
-from .selection import train_test_split
 from .regression import LinearRegression
-from .datasets import generate_regression, generate_polynomial
+from .classification import LogisticRegression
+from .metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score, \
+    binary_cross_entropy, categorical_cross_entropy, accuracy_score
+from .selection import train_test_split
+from .datasets import generate_regression, generate_polynomial, generate_classification
+
 # Public API
 __all__ = [
     'LinearRegression',
+    'LogisticRegression',
     'train_test_split',
     'mean_squared_error',
     'mean_absolute_error',
     'root_mean_squared_error',
     'r2_score',
+    'binary_cross_entropy',
+    'categorical_cross_entropy',
+    'accuracy_score',
     'generate_regression',
-    'generate_polynomial'
+    'generate_polynomial',
+    'generate_classification'
 ]
 
