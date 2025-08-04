@@ -8,8 +8,8 @@ def main():
     # Generate synthetic binary classification data
     X, y = generate_classification(
         n_samples=1000,
-        n_features=20,
-        n_informative=10,
+        n_features=10,
+        n_informative=3,
         n_redundant=2,
         n_classes=2,
         class_sep=1.0,
