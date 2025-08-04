@@ -163,38 +163,68 @@ def generate_classification(n_samples: int = 100,
     if random_state is None:
         random_state = int.from_bytes(os.urandom(4), 'big')
     
-    key = jax.random.PRNGKey(random_state)
-    key, centroid_key, x_key, redundant_key, shuffle_key = jax.random.split(key, 5)
+    main_key = jax.random.PRNGKey(random_state)
+    keys = jax.random.split(main_key, 6)
+    centroid_key, class_key, noise_key, redundant_key, redundant_noise_key, shuffle_key = keys
 
-    # Define centroids for each class at the vertices of a hypercube
-    centroids = jax.random.choice(centroid_key, jnp.array([-class_sep, class_sep]),
-                                  shape=(n_classes, n_features))
+    # Generate class centroids - only informative features should be class-separating
+    centroids = jnp.zeros((n_classes, n_features))
+    if n_informative > 0:
+        # Create informative centroids at hypercube vertices
+        informative_centroids = jax.random.choice(
+            centroid_key,
+            jnp.array([-class_sep, class_sep]),
+            shape=(n_classes, n_informative)
+        )
+        centroids = centroids.at[:, :n_informative].set(informative_centroids)
 
-    # Assign samples to classes
-    y = jax.random.randint(key, (n_samples,), 0, n_classes)
+    # Assign samples to classes uniformly at random
+    y = jax.random.randint(class_key, (n_samples,), 0, n_classes)
 
-    # Generate features matrix
+    # Initialize feature matrix
     X = jnp.zeros((n_samples, n_features))
 
     # Create informative features by adding noise to class centroids
-    informative_centroids = centroids[y][:, :n_informative]
-    X = X.at[:, :n_informative].set(informative_centroids + jax.random.normal(x_key, (n_samples, n_informative)))
+    if n_informative > 0:
+        informative_base = centroids[y][:, :n_informative]
+        if feature_noise > 0:
+            noise = jax.random.normal(noise_key, (n_samples, n_informative)) * feature_noise
+            informative_features = informative_base + noise
+        else:
+            informative_features = informative_base
+    X = X.at[:, :n_informative].set(informative_features)
 
-    # Create redundant features
-    if n_redundant > 0:
+    # Create redundant features as linear combinations of informative features
+    if n_redundant > 0 and n_informative > 0:
+        # Generate random weights for linear combinations
         w_redundant = jax.random.normal(redundant_key, (n_redundant, n_informative))
         redundant_features = X[:, :n_informative] @ w_redundant.T
+
+        # Add noise to redundant features if specified
+        if redundant_noise > 0:
+            redundant_noise_vals = jax.random.normal(
+                redundant_noise_key,
+                (n_samples, n_redundant) 
+            ) * redundant_noise
+            redundant_features = redundant_features + redundant_noise_vals
+        
         X = X.at[:, n_informative:n_informative + n_redundant].set(redundant_features)
-    
-    # Fill remaining features with noise
+        
+    # Fill remaining features with pure noise
     n_noise = n_features - n_informative - n_redundant
     if n_noise > 0:
-        noise_features = jax.random.normal(key, (n_samples, n_noise))
+        # Use a separate key for noise features
+        noise_key_final = jax.random.fold_in(noise_key, 1)
+        noise_features = jax.random.normal(noise_key_final, (n_samples, n_noise))
         X = X.at[:, -n_noise:].set(noise_features)
     
+    # Shuffle features to avoid position bias
     if shuffle:
-        X = jax.random.permutation(shuffle_key, X)
-    
+        # Shuffle along axis=1 (features), not axis=0 (samples)
+        feature_indices = jax.random.permutation(shuffle_key, n_features)
+        X = X[:, feature_indices]
+
     return X, y
+
         
 
