@@ -1,6 +1,7 @@
 import jax
 import jax.numpy as jnp
 import os
+from typing import Optional, Tuple
 
 def generate_regression(n_samples=100, n_features=20, n_informative=10, noise=0.0,
                     bias=0.0, shuffle=True, coef=False, random_state=None):
@@ -65,7 +66,7 @@ def generate_polynomial(n_samples: int = 100,
                         noise: float = 0.0,
                         bias: float = 0.0,
                         coef: bool = False,
-                        random_state: int = None):
+                        random_state: Optional[int] = None):
     """
     Generate a polynomial regression problem with one feature.
 
@@ -115,8 +116,10 @@ def generate_classification(n_samples: int = 100,
                             n_redundant: int = 2,
                             n_classes: int = 2,
                             class_sep: float = 1.0,
+                            feature_noise: float = 1.0,
+                            redundant_noise: float = 0.0,
                             shuffle: bool = True,
-                            random_state: int = None):
+                            random_state: Optional[int] = None) -> Tuple[jnp.ndarray, jnp.ndarray]:
     """
     Generate a random n-class classification problem with.
 
@@ -137,6 +140,23 @@ def generate_classification(n_samples: int = 100,
     Returns:
         A tuple (X, y) where X is the feature matrix and y are the integer labels.
     """
+    # Validate input parameters
+    if n_samples <= 0:
+        raise ValueError("n_samples must be a positive integer, got {n_samples}")
+    if n_features <= 0:
+        raise ValueError("n_features must be a positive integer, got {n_features}")
+    if n_informative < 0:
+        raise ValueError(f"n_informative must be non-negative, got {n_informative}")
+    if n_redundant < 0:
+        raise ValueError(f"n_redundant must be non-negative, got {n_redundant}")
+    if n_classes < 1:
+        raise ValueError(f"n_classes must be at least 1, got {n_classes}")
+    if class_sep <= 0:
+        raise ValueError(f"class_sep must be positive, got {class_sep}")
+    if feature_noise < 0:
+        raise ValueError(f"feature_noise must be non-negative, got {feature_noise}")
+    if redundant_noise < 0:
+        raise ValueError(f"redundant_noise must be non-negative, got {redundant_noise}")
     if n_informative + n_redundant > n_features:
         raise ValueError(f"n_informative ({n_informative}) + n_redundant ({n_redundant}) cannot be greater than n_features ({n_features})")
     
