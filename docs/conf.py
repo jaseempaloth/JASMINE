@@ -41,7 +41,7 @@ html_static_path = []  # Empty for now, will add files later if needed
 
 # Theme options
 html_theme_options = {
-    'canonical_url': '',
+    'canonical_url': 'https://jasmine.readthedocs.io/',
     'analytics_id': '',
     'logo_only': False,
     'display_version': True,

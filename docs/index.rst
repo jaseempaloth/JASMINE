@@ -139,7 +139,7 @@ Support
 -------
 
 * **GitHub Issues**: `Report bugs and request features <https://github.com/jaseempaloth/JASMINE/issues>`_
-* **Documentation**: Complete guides and API reference
+* **Documentation**: `Complete guides and API reference <https://jasmine.readthedocs.io>`_
 * **Examples**: Real-world use cases and tutorials
 
 Indices and Tables

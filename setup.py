@@ -15,8 +15,9 @@ setup(
     url="https://github.com/jaseempaloth/JASMINE",
     project_urls={
         "Bug Tracker": "https://github.com/jaseempaloth/JASMINE/issues",
-        "Documentation": "https://github.com/jaseempaloth/JASMINE/docs",
+        "Documentation": "https://jasmine.readthedocs.io",
         "Source Code": "https://github.com/jaseempaloth/JASMINE",
+        "Homepage": "https://jasmine.readthedocs.io",
     },
     packages=find_packages(),
     classifiers=[

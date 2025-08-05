@@ -3,8 +3,11 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![JAX](https://img.shields.io/badge/JAX-latest-orange.svg)](https://github.com/google/jax)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation](https://img.shields.io/badge/docs-jasmine-brightgreen.svg)](https://jasmine.readthedocs.io)
 
 JASMINE is a high-performance machine learning library built on JAX, designed to leverage GPU and TPU acceleration for statistical modeling and neural computation.
+
+📖 **[Read the Documentation](https://jasmine.readthedocs.io)** | 🚀 **[Quick Start](https://jasmine.readthedocs.io/en/latest/quickstart.html)** | 📚 **[API Reference](https://jasmine.readthedocs.io/en/latest/api/)**
 
 ## Features
 
@@ -43,12 +46,13 @@ pip install -e .
 
 ## Documentation
 
-- **[Quick Start Guide](docs/quickstart.md)** - Get up and running in 5 minutes
-- **[API Reference](docs/api.md)** - Complete function and class documentation  
-- **[Examples](docs/examples.md)** - Detailed tutorials and use cases
-- **[Performance Guide](docs/performance.md)** - Benchmarks and optimization tips
-- **[Installation Guide](docs/installation.md)** - Platform-specific setup instructions
-- **[FAQ](docs/faq.md)** - Common questions and troubleshooting
+📖 **Complete documentation is available at [jasmine.readthedocs.io](https://jasmine.readthedocs.io)**
+
+**Quick Links:**
+- 🚀 [Quick Start Guide](https://jasmine.readthedocs.io/en/latest/quickstart.html) - Get up and running in 5 minutes
+- 📚 [API Reference](https://jasmine.readthedocs.io/en/latest/api/) - Complete function and class documentation  
+- 📝 [Examples & Tutorials](https://jasmine.readthedocs.io/en/latest/examples.html) - Detailed use cases and best practices
+- 💾 [Installation Guide](https://jasmine.readthedocs.io/en/latest/installation.html) - Platform-specific setup instructions
 
 ## Requirements
 
