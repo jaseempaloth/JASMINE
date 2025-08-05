@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classification Models &mdash; JASMINE v0.1.0 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="jasmine.classification.LogisticRegression" href="generated/jasmine.classification.LogisticRegression.html" />
+    <link rel="prev" title="jasmine.regression.LinearRegression.evaluate" href="generated/jasmine.regression.LinearRegression.evaluate.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            JASMINE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples &amp; Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples &amp; Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Models</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Classification Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.html">jasmine.classification.LogisticRegression</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#logisticregression">LogisticRegression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#jasmine.classification.LogisticRegression"><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.__init__"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.init_params"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.init_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.forward"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.loss_fn"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.loss_fn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.train"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.train()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.predict_probabilities"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.predict_probabilities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.inference"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.inference()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.classification.LogisticRegression.evaluate"><code class="docutils literal notranslate"><span class="pre">LogisticRegression.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.__init__.html">jasmine.classification.LogisticRegression.__init__</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.train.html">jasmine.classification.LogisticRegression.train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.inference.html">jasmine.classification.LogisticRegression.inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.predict_probabilities.html">jasmine.classification.LogisticRegression.predict_probabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.evaluate.html">jasmine.classification.LogisticRegression.evaluate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#binary-classification">Binary Classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#classification-with-regularization">Classification with Regularization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance-tips">Performance Tips</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Data Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Dataset Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Performance Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selection.html">Data Selection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JASMINE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Classification Models</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/classification.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="classification-models">
+<h1>Classification Models<a class="headerlink" href="#classification-models" title="Link to this heading"></a></h1>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">jasmine.classification</span></code> module provides classification models with JAX acceleration.</p>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.html#jasmine.classification.LogisticRegression" title="jasmine.classification.LogisticRegression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a>([use_bias, ...])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="logisticregression">
+<h2>LogisticRegression<a class="headerlink" href="#logisticregression" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jasmine.classification.</span></span><span class="sig-name descname"><span class="pre">LogisticRegression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_bias=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate=0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_epochs=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function=&lt;function</span> <span class="pre">binary_cross_entropy&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l1_penalty=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l2_penalty=0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.__init__.html#jasmine.classification.LogisticRegression.__init__" title="jasmine.classification.LogisticRegression.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([use_bias, learning_rate, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.train.html#jasmine.classification.LogisticRegression.train" title="jasmine.classification.LogisticRegression.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>(X, y[, validation_data, ...])</p></td>
+<td><p>Train the logistic regression model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.inference.html#jasmine.classification.LogisticRegression.inference" title="jasmine.classification.LogisticRegression.inference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inference</span></code></a>(X[, threshold])</p></td>
+<td><p>Perform inference on the input features.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.predict_probabilities.html#jasmine.classification.LogisticRegression.predict_probabilities" title="jasmine.classification.LogisticRegression.predict_probabilities"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_probabilities</span></code></a>(X)</p></td>
+<td><p>Predict probabilities for the input features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/jasmine.classification.LogisticRegression.evaluate.html#jasmine.classification.LogisticRegression.evaluate" title="jasmine.classification.LogisticRegression.evaluate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluate</span></code></a>(X, y[, metrics_fn])</p></td>
+<td><p>Evaluate the model using the specified metrics function.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_bias=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate=0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_epochs=1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function=&lt;function</span> <span class="pre">binary_cross_entropy&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l1_penalty=0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l2_penalty=0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.init_params">
+<span class="sig-name descname"><span class="pre">init_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.init_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.init_params" title="Link to this definition"></a></dt>
+<dd><p>Initialize model parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of features in the input data.</p></li>
+<li><p><strong>key</strong> (<em>jax.random.PRNGKey</em><em>, </em><em>optional</em>) – Random key for parameter initialization.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.forward">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.forward" title="Link to this definition"></a></dt>
+<dd><p>Forward pass for the logistic regression model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Model parameters</p></li>
+<li><p><strong>X</strong> (<em>jnp.ndarray</em>) – Input features</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.loss_fn">
+<span class="sig-name descname"><span class="pre">loss_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.loss_fn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.loss_fn" title="Link to this definition"></a></dt>
+<dd><p>Compute the loss function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a>) – Model parameters</p></li>
+<li><p><strong>X</strong> (<em>jnp.ndarray</em>) – Input features</p></li>
+<li><p><strong>y</strong> (<em>jnp.ndarray</em>) – Target labels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed loss value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>jnp.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopping_patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.train" title="Link to this definition"></a></dt>
+<dd><p>Train the logistic regression model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>jnp.ndarray</em>) – Input features</p></li>
+<li><p><strong>y</strong> (<em>jnp.ndarray</em>) – Target labels</p></li>
+<li><p><strong>validation_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>, </em><em>optional</em>) – Tuple of (X_val, y_val) for validation</p></li>
+<li><p><strong>early_stopping_patience</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>optional</em>) – Number of epochs with no improvement to wait before stopping</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Verbosity level</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Final model parameters after training</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.predict_probabilities">
+<span class="sig-name descname"><span class="pre">predict_probabilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.predict_probabilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.predict_probabilities" title="Link to this definition"></a></dt>
+<dd><p>Predict probabilities for the input features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>jnp.ndarray</em>) – Input features</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted probabilities</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>jnp.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.inference">
+<span class="sig-name descname"><span class="pre">inference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.inference" title="Link to this definition"></a></dt>
+<dd><p>Perform inference on the input features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>jnp.ndarray</em>) – Input features</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted class labels</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>jnp.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jasmine.classification.LogisticRegression.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics_fn=&lt;PjitFunction</span> <span class="pre">of</span> <span class="pre">&lt;function</span> <span class="pre">accuracy_score&gt;&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/classification/logistic_regression.html#LogisticRegression.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.classification.LogisticRegression.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the model using the specified metrics function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>jnp.ndarray</em>) – Input features</p></li>
+<li><p><strong>y</strong> (<em>jnp.ndarray</em>) – True labels</p></li>
+<li><p><strong>metrics_fn</strong> (<em>callable</em>) – Metrics function to compute the score</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed metrics score</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="binary-classification">
+<h3>Binary Classification<a class="headerlink" href="#binary-classification" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jasmine.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">jasmine.datasets</span> <span class="kn">import</span> <span class="n">generate_classification</span>
+<span class="kn">from</span> <span class="nn">jasmine.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Generate synthetic data</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">generate_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Create and train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Make predictions</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">inference</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_probabilities</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">metrics_fn</span><span class="o">=</span><span class="n">accuracy_score</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="classification-with-regularization">
+<h3>Classification with Regularization<a class="headerlink" href="#classification-with-regularization" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># L2 regularization for overfitting prevention</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">n_epochs</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+    <span class="n">l2_penalty</span><span class="o">=</span><span class="mf">0.01</span>
+<span class="p">)</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Evaluate model confidence</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_probabilities</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">high_confidence</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">probabilities</span> <span class="o">&gt;</span> <span class="mf">0.8</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">probabilities</span> <span class="o">&lt;</span> <span class="mf">0.2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;High confidence predictions: </span><span class="si">{</span><span class="n">high_confidence</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">probabilities</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="performance-tips">
+<h3>Performance Tips<a class="headerlink" href="#performance-tips" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Use feature scaling for better convergence</p></li>
+<li><p>Monitor training with <code class="docutils literal notranslate"><span class="pre">verbose=1</span></code> parameter</p></li>
+<li><p>L2 regularization helps with high-dimensional data</p></li>
+<li><p>JAX automatically uses GPU when available</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="generated/jasmine.regression.LinearRegression.evaluate.html" class="btn btn-neutral float-left" title="jasmine.regression.LinearRegression.evaluate" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/jasmine.classification.LogisticRegression.html" class="btn btn-neutral float-right" title="jasmine.classification.LogisticRegression" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jaseem Paloth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

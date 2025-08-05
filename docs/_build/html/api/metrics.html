@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance Metrics &mdash; JASMINE v0.1.0 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="jasmine.metrics.mean_squared_error" href="generated/jasmine.metrics.mean_squared_error.html" />
+    <link rel="prev" title="jasmine.datasets.generate_polynomial" href="generated/jasmine.datasets.generate_polynomial.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            JASMINE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples &amp; Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples &amp; Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regression.html">Regression Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classification.html">Classification Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Data Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Dataset Generators</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Performance Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#regression-metrics">Regression Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.metrics.mean_squared_error.html">jasmine.metrics.mean_squared_error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.metrics.mean_absolute_error.html">jasmine.metrics.mean_absolute_error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.metrics.root_mean_squared_error.html">jasmine.metrics.root_mean_squared_error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.metrics.r2_score.html">jasmine.metrics.r2_score</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#classification-metrics">Classification Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.metrics.accuracy_score.html">jasmine.metrics.accuracy_score</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.metrics.binary_cross_entropy.html">jasmine.metrics.binary_cross_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/jasmine.metrics.categorical_cross_entropy.html">jasmine.metrics.categorical_cross_entropy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#regression-functions">Regression Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mean-squared-error">mean_squared_error</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.metrics.mean_squared_error"><code class="docutils literal notranslate"><span class="pre">mean_squared_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mean-absolute-error">mean_absolute_error</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.metrics.mean_absolute_error"><code class="docutils literal notranslate"><span class="pre">mean_absolute_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#root-mean-squared-error">root_mean_squared_error</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.metrics.root_mean_squared_error"><code class="docutils literal notranslate"><span class="pre">root_mean_squared_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#r2-score">r2_score</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.metrics.r2_score"><code class="docutils literal notranslate"><span class="pre">r2_score()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#classification-functions">Classification Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accuracy-score">accuracy_score</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.metrics.accuracy_score"><code class="docutils literal notranslate"><span class="pre">accuracy_score()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-cross-entropy">binary_cross_entropy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.metrics.binary_cross_entropy"><code class="docutils literal notranslate"><span class="pre">binary_cross_entropy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#categorical-cross-entropy">categorical_cross_entropy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jasmine.metrics.categorical_cross_entropy"><code class="docutils literal notranslate"><span class="pre">categorical_cross_entropy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Regression Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Classification Metrics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-with-models">Using with Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metric-properties">Metric Properties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="selection.html">Data Selection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">JASMINE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Performance Metrics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/metrics.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="performance-metrics">
+<h1>Performance Metrics<a class="headerlink" href="#performance-metrics" title="Link to this heading"></a></h1>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">jasmine.metrics</span></code> module provides performance evaluation metrics.</p>
+<section id="regression-metrics">
+<h2>Regression Metrics<a class="headerlink" href="#regression-metrics" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jasmine.metrics.mean_squared_error" title="jasmine.metrics.mean_squared_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_squared_error</span></code></a>(y_true, y_pred)</p></td>
+<td><p>Compute the Mean Squared Error (MSE) between true and predicted values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jasmine.metrics.mean_absolute_error" title="jasmine.metrics.mean_absolute_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_absolute_error</span></code></a>(y_true, y_pred)</p></td>
+<td><p>Compute the Mean Absolute Error (MAE) between true and predicted values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jasmine.metrics.root_mean_squared_error" title="jasmine.metrics.root_mean_squared_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">root_mean_squared_error</span></code></a>(y_true, y_pred)</p></td>
+<td><p>Compute the Root Mean Squared Error (RMSE) between true and predicted values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jasmine.metrics.r2_score" title="jasmine.metrics.r2_score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">r2_score</span></code></a>(y_true, y_pred)</p></td>
+<td><p>Compute the R² score (coefficient of determination) between true and predicted values.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classification-metrics">
+<h2>Classification Metrics<a class="headerlink" href="#classification-metrics" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jasmine.metrics.accuracy_score" title="jasmine.metrics.accuracy_score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">accuracy_score</span></code></a>(y_true, y_pred)</p></td>
+<td><p>Compute the accuracy score between true and predicted values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jasmine.metrics.binary_cross_entropy" title="jasmine.metrics.binary_cross_entropy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_cross_entropy</span></code></a>(y_true, y_pred[, ...])</p></td>
+<td><p>Compute the Binary Cross-Entropy loss between true and predicted values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jasmine.metrics.categorical_cross_entropy" title="jasmine.metrics.categorical_cross_entropy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">categorical_cross_entropy</span></code></a>(y_true, y_pred[, ...])</p></td>
+<td><p>Compute the Categorical Cross-Entropy loss between true and predicted values.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="regression-functions">
+<h2>Regression Functions<a class="headerlink" href="#regression-functions" title="Link to this heading"></a></h2>
+<section id="mean-squared-error">
+<h3>mean_squared_error<a class="headerlink" href="#mean-squared-error" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jasmine.metrics.mean_squared_error">
+<span class="sig-prename descclassname"><span class="pre">jasmine.metrics.</span></span><span class="sig-name descname"><span class="pre">mean_squared_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/metrics/_regression.html#mean_squared_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.metrics.mean_squared_error" title="Link to this definition"></a></dt>
+<dd><p>Compute the Mean Squared Error (MSE) between true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>jnp.ndarray</em>) – True target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>jnp.ndarray</em>) – Predicted target values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed MSE value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="mean-absolute-error">
+<h3>mean_absolute_error<a class="headerlink" href="#mean-absolute-error" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jasmine.metrics.mean_absolute_error">
+<span class="sig-prename descclassname"><span class="pre">jasmine.metrics.</span></span><span class="sig-name descname"><span class="pre">mean_absolute_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/metrics/_regression.html#mean_absolute_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.metrics.mean_absolute_error" title="Link to this definition"></a></dt>
+<dd><p>Compute the Mean Absolute Error (MAE) between true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>jnp.ndarray</em>) – True target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>jnp.ndarray</em>) – Predicted target values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed MAE value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="root-mean-squared-error">
+<h3>root_mean_squared_error<a class="headerlink" href="#root-mean-squared-error" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jasmine.metrics.root_mean_squared_error">
+<span class="sig-prename descclassname"><span class="pre">jasmine.metrics.</span></span><span class="sig-name descname"><span class="pre">root_mean_squared_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/metrics/_regression.html#root_mean_squared_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.metrics.root_mean_squared_error" title="Link to this definition"></a></dt>
+<dd><p>Compute the Root Mean Squared Error (RMSE) between true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>jnp.ndarray</em>) – True target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>jnp.ndarray</em>) – Predicted target values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed RMSE value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="r2-score">
+<h3>r2_score<a class="headerlink" href="#r2-score" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jasmine.metrics.r2_score">
+<span class="sig-prename descclassname"><span class="pre">jasmine.metrics.</span></span><span class="sig-name descname"><span class="pre">r2_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/metrics/_regression.html#r2_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.metrics.r2_score" title="Link to this definition"></a></dt>
+<dd><p>Compute the R² score (coefficient of determination) between true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>jnp.ndarray</em>) – True target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>jnp.ndarray</em>) – Predicted target values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed R² score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="classification-functions">
+<h2>Classification Functions<a class="headerlink" href="#classification-functions" title="Link to this heading"></a></h2>
+<section id="accuracy-score">
+<h3>accuracy_score<a class="headerlink" href="#accuracy-score" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jasmine.metrics.accuracy_score">
+<span class="sig-prename descclassname"><span class="pre">jasmine.metrics.</span></span><span class="sig-name descname"><span class="pre">accuracy_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/metrics/_classification.html#accuracy_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.metrics.accuracy_score" title="Link to this definition"></a></dt>
+<dd><p>Compute the accuracy score between true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>jnp.ndarray</em>) – True target values.</p></li>
+<li><p><strong>y_pred</strong> (<em>jnp.ndarray</em>) – Predicted target values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed accuracy score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="binary-cross-entropy">
+<h3>binary_cross_entropy<a class="headerlink" href="#binary-cross-entropy" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jasmine.metrics.binary_cross_entropy">
+<span class="sig-prename descclassname"><span class="pre">jasmine.metrics.</span></span><span class="sig-name descname"><span class="pre">binary_cross_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_logits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/metrics/_classification.html#binary_cross_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.metrics.binary_cross_entropy" title="Link to this definition"></a></dt>
+<dd><p>Compute the Binary Cross-Entropy loss between true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>jnp.ndarray</em>) – Ground truth binary labels (0 or 1).</p></li>
+<li><p><strong>y_pred</strong> (<em>jnp.ndarray</em>) – Predicted probabilities (between 0 and 1).</p></li>
+<li><p><strong>from_logits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, y_pred is expected to be logits. If False, y_pred should be probabilities.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed Binary Cross-Entropy loss.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="categorical-cross-entropy">
+<h3>categorical_cross_entropy<a class="headerlink" href="#categorical-cross-entropy" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="jasmine.metrics.categorical_cross_entropy">
+<span class="sig-prename descclassname"><span class="pre">jasmine.metrics.</span></span><span class="sig-name descname"><span class="pre">categorical_cross_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_logits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jasmine/metrics/_classification.html#categorical_cross_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jasmine.metrics.categorical_cross_entropy" title="Link to this definition"></a></dt>
+<dd><p>Compute the Categorical Cross-Entropy loss between true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>jnp.ndarray</em>) – True categorical target values (one-hot encoded).</p></li>
+<li><p><strong>y_pred</strong> (<em>jnp.ndarray</em>) – Predicted probabilities or logits for each class.</p></li>
+<li><p><strong>from_logits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – If True, y_pred is expected to be a raw logit output.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Computed Categorical Cross-Entropy loss.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Regression Metrics<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jasmine.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">mean_squared_error</span><span class="p">,</span>
+    <span class="n">mean_absolute_error</span><span class="p">,</span>
+    <span class="n">r2_score</span>
+<span class="p">)</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="c1"># Sample predictions and targets</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">])</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">])</span>
+
+<span class="c1"># Calculate metrics</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">mae</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MSE: </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAE: </span><span class="si">{</span><span class="n">mae</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R²: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Classification Metrics<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jasmine.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">binary_cross_entropy</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="c1"># Binary classification</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">y_pred_classes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">y_pred_probs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">])</span>
+
+<span class="c1"># Calculate metrics</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred_classes</span><span class="p">)</span>
+<span class="n">bce</span> <span class="o">=</span> <span class="n">binary_cross_entropy</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred_probs</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Binary Cross-Entropy: </span><span class="si">{</span><span class="n">bce</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="using-with-models">
+<h3>Using with Models<a class="headerlink" href="#using-with-models" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jasmine.regression</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">jasmine.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="c1"># Train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Evaluate with custom metric</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">metrics_fn</span><span class="o">=</span><span class="n">mean_squared_error</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>  <span class="c1"># Default metric</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MSE: </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R²: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="metric-properties">
+<h3>Metric Properties<a class="headerlink" href="#metric-properties" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>All metrics are JIT-compiled for fast computation</p></li>
+<li><p>Functions accept JAX arrays as input</p></li>
+<li><p>Binary cross-entropy supports both probabilities and logits</p></li>
+<li><p>Metrics are designed to work seamlessly with JASMINE models</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="generated/jasmine.datasets.generate_polynomial.html" class="btn btn-neutral float-left" title="jasmine.datasets.generate_polynomial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/jasmine.metrics.mean_squared_error.html" class="btn btn-neutral float-right" title="jasmine.metrics.mean_squared_error" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jaseem Paloth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

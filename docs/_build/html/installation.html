@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation Guide &mdash; JASMINE v0.1.0 Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples &amp; Tutorials" href="examples.html" />
+    <link rel="prev" title="Quick Start Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            JASMINE
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-dependencies">Core Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-methods">Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#method-1-from-source-recommended">Method 1: From Source (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-2-direct-install">Method 2: Direct Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-3-requirements-file">Method 3: Requirements File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gpu-support">GPU Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nvidia-gpu-cuda">NVIDIA GPU (CUDA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#google-tpu">Google TPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#amd-gpu-rocm">AMD GPU (ROCm)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apple-silicon-metal">Apple Silicon (Metal)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verification">Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-installation-check">Basic Installation Check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpu-tpu-verification">GPU/TPU Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-issues">Common Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-specific-notes">Platform-Specific Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#virtual-environments">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-jasmine">Updating JASMINE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstalling">Uninstalling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples &amp; Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-dependencies">Core Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-methods">Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#method-1-from-source-recommended">Method 1: From Source (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-2-direct-install">Method 2: Direct Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-3-requirements-file">Method 3: Requirements File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gpu-support">GPU Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nvidia-gpu-cuda">NVIDIA GPU (CUDA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#google-tpu">Google TPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#amd-gpu-rocm">AMD GPU (ROCm)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apple-silicon-metal">Apple Silicon (Metal)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#verification">Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-installation-check">Basic Installation Check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpu-tpu-verification">GPU/TPU Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-issues">Common Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-specific-notes">Platform-Specific Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#virtual-environments">Virtual Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-jasmine">Updating JASMINE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstalling">Uninstalling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples &amp; Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/regression.html">Regression Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/classification.html">Classification Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/preprocessing.html">Data Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/datasets.html">Dataset Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/metrics.html">Performance Metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/selection.html">Data Selection</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">JASMINE</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
+<section id="system-requirements">
+<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h2>
+<p>JASMINE requires:</p>
+<ul class="simple">
+<li><p><strong>Python</strong>: 3.7 or higher (3.8+ recommended)</p></li>
+<li><p><strong>Operating System</strong>: Linux, macOS, or Windows</p></li>
+<li><p><strong>Memory</strong>: 4GB RAM minimum (8GB+ recommended for large datasets)</p></li>
+<li><p><strong>Disk Space</strong>: 1GB free space</p></li>
+</ul>
+</section>
+<section id="core-dependencies">
+<h2>Core Dependencies<a class="headerlink" href="#core-dependencies" title="Link to this heading"></a></h2>
+<p>JASMINE’s core dependencies are automatically installed:</p>
+<ul class="simple">
+<li><p><strong>JAX</strong> (&gt;=0.4.0): High-performance numerical computing</p></li>
+<li><p><strong>JAXlib</strong>: JAX’s XLA backend</p></li>
+<li><p><strong>NumPy</strong>: Numerical arrays and operations</p></li>
+</ul>
+<p>Optional dependencies are available via extras groups:</p>
+<ul class="simple">
+<li><p><strong>Development tools</strong>: pytest, black, sphinx</p></li>
+<li><p><strong>Examples</strong>: matplotlib, jupyter, pandas</p></li>
+<li><p><strong>All extras</strong>: Complete development environment</p></li>
+</ul>
+</section>
+<section id="installation-methods">
+<h2>Installation Methods<a class="headerlink" href="#installation-methods" title="Link to this heading"></a></h2>
+<section id="method-1-from-source-recommended">
+<h3>Method 1: From Source (Recommended)<a class="headerlink" href="#method-1-from-source-recommended" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/jaseempaloth/JASMINE.git
+<span class="nb">cd</span><span class="w"> </span>JASMINE
+
+<span class="c1"># Install core package</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+
+<span class="c1"># Or install with development tools</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+
+<span class="c1"># Or install with examples dependencies</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[examples]&quot;</span>
+
+<span class="c1"># Or install everything</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="method-2-direct-install">
+<h3>Method 2: Direct Install<a class="headerlink" href="#method-2-direct-install" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install core dependencies first</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jax&gt;=0.4.0&quot;</span><span class="w"> </span>numpy
+
+<span class="c1"># Install JASMINE</span>
+pip<span class="w"> </span>install<span class="w"> </span>/path/to/JASMINE
+</pre></div>
+</div>
+</section>
+<section id="method-3-requirements-file">
+<h3>Method 3: Requirements File<a class="headerlink" href="#method-3-requirements-file" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using the included requirements.txt</span>
+<span class="nb">cd</span><span class="w"> </span>JASMINE
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gpu-support">
+<h2>GPU Support<a class="headerlink" href="#gpu-support" title="Link to this heading"></a></h2>
+<p>JASMINE automatically uses GPU acceleration when available. To enable GPU support:</p>
+<section id="nvidia-gpu-cuda">
+<h3>NVIDIA GPU (CUDA)<a class="headerlink" href="#nvidia-gpu-cuda" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install CUDA-enabled JAX</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jax[cuda]&quot;</span><span class="w"> </span>-f<span class="w"> </span>https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+
+<span class="c1"># Verify GPU detection</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import jax; print(&#39;GPUs:&#39;, jax.devices(&#39;gpu&#39;))&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="google-tpu">
+<h3>Google TPU<a class="headerlink" href="#google-tpu" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install TPU-enabled JAX</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jax[tpu]&quot;</span><span class="w"> </span>-f<span class="w"> </span>https://storage.googleapis.com/jax-releases/libtpu_releases.html
+</pre></div>
+</div>
+</section>
+<section id="amd-gpu-rocm">
+<h3>AMD GPU (ROCm)<a class="headerlink" href="#amd-gpu-rocm" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install ROCm-enabled JAX</span>
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jax[rocm]&quot;</span><span class="w"> </span>-f<span class="w"> </span>https://storage.googleapis.com/jax-releases/jax_rocm_releases.html
+</pre></div>
+</div>
+</section>
+<section id="apple-silicon-metal">
+<h3>Apple Silicon (Metal)<a class="headerlink" href="#apple-silicon-metal" title="Link to this heading"></a></h3>
+<p>JAX uses Apple’s Metal Performance Shaders automatically on M1/M2 Macs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard installation works on Apple Silicon</span>
+pip<span class="w"> </span>install<span class="w"> </span>jax
+
+<span class="c1"># Verify Metal backend</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import jax; print(&#39;Devices:&#39;, jax.devices())&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Link to this heading"></a></h2>
+<section id="basic-installation-check">
+<h3>Basic Installation Check<a class="headerlink" href="#basic-installation-check" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test basic functionality</span>
+<span class="kn">import</span> <span class="nn">jasmine</span>
+<span class="kn">from</span> <span class="nn">jasmine.regression</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">jasmine.datasets</span> <span class="kn">import</span> <span class="n">generate_regression</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JASMINE version: </span><span class="si">{</span><span class="n">jasmine</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Quick test</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">generate_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basic test R² score: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ Installation successful!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="gpu-tpu-verification">
+<h3>GPU/TPU Verification<a class="headerlink" href="#gpu-tpu-verification" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="c1"># Check available devices</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Available devices:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Test device placement</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Array device: </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Performance test</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">jasmine.regression</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">jasmine.datasets</span> <span class="kn">import</span> <span class="n">generate_regression</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">generate_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">(</span><span class="n">n_epochs</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training time: </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">(</span><span class="s1">&#39;gpu&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ GPU acceleration active&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">(</span><span class="s1">&#39;tpu&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ TPU acceleration active&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;• CPU-only mode&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="common-issues">
+<h3>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading"></a></h3>
+<p><strong>Issue</strong>: <code class="docutils literal notranslate"><span class="pre">ImportError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'jax'</span></code></p>
+<p><strong>Solution</strong>: Install JAX manually:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jax&gt;=0.4.0&quot;</span><span class="w"> </span>jaxlib
+</pre></div>
+</div>
+<p><strong>Issue</strong>: <code class="docutils literal notranslate"><span class="pre">RuntimeError:</span> <span class="pre">CUDA</span> <span class="pre">device</span> <span class="pre">not</span> <span class="pre">found</span></code></p>
+<p><strong>Solution</strong>: Install CUDA-compatible JAX:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>uninstall<span class="w"> </span>jax<span class="w"> </span>jaxlib
+pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;jax[cuda]&quot;</span><span class="w"> </span>-f<span class="w"> </span>https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+</pre></div>
+</div>
+<p><strong>Issue</strong>: Slow performance on first run</p>
+<p><strong>Solution</strong>: This is normal JAX compilation. Subsequent runs will be much faster:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># First run: slow (compilation)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># ~3 seconds</span>
+
+<span class="c1"># Second run: fast (compiled)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># ~0.1 seconds</span>
+</pre></div>
+</div>
+<p><strong>Issue</strong>: Out of memory errors</p>
+<p><strong>Solution</strong>: Use smaller batch sizes or enable 64-bit precision:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable 64-bit precision for better numerical stability</span>
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Issue</strong>: <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError:</span> <span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">'jasmine'</span></code></p>
+<p><strong>Solution</strong>: Install in development mode:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>JASMINE
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="platform-specific-notes">
+<h3>Platform-Specific Notes<a class="headerlink" href="#platform-specific-notes" title="Link to this heading"></a></h3>
+<p><strong>macOS with Apple Silicon</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># May need to install specific JAX version</span>
+pip<span class="w"> </span>install<span class="w"> </span>jax-metal
+</pre></div>
+</div>
+<p><strong>Windows</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use conda for easier dependency management</span>
+conda<span class="w"> </span>install<span class="w"> </span>jax<span class="w"> </span>-c<span class="w"> </span>conda-forge
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p><strong>Linux with old GLIBC</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use manylinux wheels</span>
+pip<span class="w"> </span>install<span class="w"> </span>--only-binary<span class="o">=</span>all<span class="w"> </span>jax<span class="w"> </span>jaxlib
+</pre></div>
+</div>
+</section>
+</section>
+<section id="development-installation">
+<h2>Development Installation<a class="headerlink" href="#development-installation" title="Link to this heading"></a></h2>
+<p>For contributors and developers:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone and install in development mode</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/jaseempaloth/JASMINE.git
+<span class="nb">cd</span><span class="w"> </span>JASMINE
+
+<span class="c1"># Install with all development dependencies</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+
+<span class="c1"># Install pre-commit hooks (optional)</span>
+pre-commit<span class="w"> </span>install
+
+<span class="c1"># Run tests</span>
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/
+
+<span class="c1"># Build documentation</span>
+<span class="nb">cd</span><span class="w"> </span>docs_sphinx
+make<span class="w"> </span>html
+</pre></div>
+</div>
+</section>
+<section id="virtual-environments">
+<h2>Virtual Environments<a class="headerlink" href="#virtual-environments" title="Link to this heading"></a></h2>
+<p>Using conda:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create environment</span>
+conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>jasmine<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
+conda<span class="w"> </span>activate<span class="w"> </span>jasmine
+
+<span class="c1"># Install JASMINE</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span>
+</pre></div>
+</div>
+<p>Using venv:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create environment</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>jasmine_env
+<span class="nb">source</span><span class="w"> </span>jasmine_env/bin/activate<span class="w">  </span><span class="c1"># Linux/macOS</span>
+<span class="c1"># jasmine_env\\Scripts\\activate  # Windows</span>
+
+<span class="c1"># Install JASMINE</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="docker-installation">
+<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Link to this heading"></a></h2>
+<p>For containerized deployment:</p>
+<div class="highlight-dockerfile notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.9-slim</span>
+
+<span class="c"># Install system dependencies</span>
+<span class="k">RUN</span><span class="w"> </span>apt-update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>git
+
+<span class="c"># Clone and install JASMINE</span>
+<span class="k">RUN</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/jaseempaloth/JASMINE.git
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/JASMINE</span>
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span>
+
+<span class="c"># Set entrypoint</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build and run</span>
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>jasmine<span class="w"> </span>.
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>jasmine
+</pre></div>
+</div>
+</section>
+<section id="updating-jasmine">
+<h2>Updating JASMINE<a class="headerlink" href="#updating-jasmine" title="Link to this heading"></a></h2>
+<p>To update to the latest version:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>JASMINE
+git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span><span class="w"> </span>--upgrade
+</pre></div>
+</div>
+</section>
+<section id="uninstalling">
+<h2>Uninstalling<a class="headerlink" href="#uninstalling" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uninstall JASMINE</span>
+pip<span class="w"> </span>uninstall<span class="w"> </span>jasmine
+
+<span class="c1"># Optionally remove dependencies</span>
+pip<span class="w"> </span>uninstall<span class="w"> </span>jax<span class="w"> </span>jaxlib<span class="w"> </span>numpy
+</pre></div>
+</div>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading"></a></h2>
+<p>After installation:</p>
+<ol class="arabic simple">
+<li><p>Read the <a class="reference internal" href="quickstart.html"><span class="doc">Quick Start Guide</span></a> guide</p></li>
+<li><p>Try the <a class="reference internal" href="examples.html"><span class="doc">Examples &amp; Tutorials</span></a></p></li>
+<li><p>Explore the <a class="reference internal" href="api/index.html"><span class="doc">API Reference</span></a></p></li>
+</ol>
+<p>For issues not covered here, please visit our GitHub repository or contact support.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples &amp; Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Jaseem Paloth.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
