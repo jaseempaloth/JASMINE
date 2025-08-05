@@ -25,7 +25,7 @@ import jasmine
 print(f"JASMINE version: {jasmine.__version__}")
 
 # Test basic functionality
-from jasmine import LinearRegression
+from jasmine.regression import LinearRegression
 from jasmine.datasets import generate_regression
 
 X, y = generate_regression(n_samples=100, n_features=5, random_state=42)
@@ -410,7 +410,8 @@ import jax
 ```python
 # Save as test_installation.py
 import jax.numpy as jnp
-from jasmine import LinearRegression, LogisticRegression
+from jasmine.regression import LinearRegression
+from jasmine.classification import LogisticRegression
 from jasmine.preprocessing import StandardScaler
 from jasmine.datasets import generate_regression, generate_classification
 
@@ -462,7 +463,7 @@ python test_installation.py
 # Save as test_performance.py
 import time
 import jax.numpy as jnp
-from jasmine import LinearRegression
+from jasmine.regression import LinearRegression
 
 # Generate larger dataset
 X = jnp.random.normal(0, 1, (5000, 20))

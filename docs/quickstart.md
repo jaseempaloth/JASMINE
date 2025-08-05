@@ -28,7 +28,8 @@ pip install -e .
 
 ```python
 import jax.numpy as jnp
-from jasmine import LinearRegression, LogisticRegression
+from jasmine.regression import LinearRegression
+from jasmine.classification import LogisticRegression
 from jasmine.datasets import generate_regression, generate_classification
 from jasmine.preprocessing import StandardScaler
 from jasmine import train_test_split

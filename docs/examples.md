@@ -18,7 +18,7 @@ This page contains detailed examples and tutorials for using JASMINE.
 
 ```python
 import jax.numpy as jnp
-from jasmine import LinearRegression, mean_squared_error
+from jasmine.regression import LinearRegression, mean_squared_error
 from jasmine.selection import train_test_split
 from jasmine.datasets import generate_regression
 
@@ -63,7 +63,7 @@ print(f"R²: {r2:.4f}")
 ### Linear Regression with Regularization
 
 ```python
-from jasmine import LinearRegression
+from jasmine.regression import LinearRegression
 from jasmine.datasets import generate_regression
 
 # Generate data with noise
@@ -106,7 +106,7 @@ for name, model in models.items():
 ### Advanced Optimization
 
 ```python
-from jasmine import LinearRegression
+from jasmine.regression import LinearRegression
 
 # Adam optimizer with advanced settings
 model = LinearRegression(
@@ -310,9 +310,9 @@ print(f"  Test Accuracy: {test_acc:.4f}")
 
 # Check for overfitting
 if train_acc - val_acc > 0.05:
-    print("⚠️  Possible overfitting detected!")
+    print("WARNING: Possible overfitting detected!")
 else:
-    print("✅ Model generalizes well")
+    print("SUCCESS: Model generalizes well")
 ```
 
 ---
@@ -322,7 +322,7 @@ else:
 ### Custom Loss Functions
 
 ```python
-from jasmine import LinearRegression
+from jasmine.regression import LinearRegression
 
 # Model with Huber loss (robust to outliers)
 model_huber = LinearRegression(
@@ -366,7 +366,7 @@ for name, model in models.items():
 ### Hyperparameter Tuning
 
 ```python
-from jasmine import LinearRegression
+from jasmine.regression import LinearRegression
 import itertools
 
 # Define hyperparameter grid
@@ -414,7 +414,7 @@ print(f"Best Score: {best_score:.4f}")
 ### JASMINE vs Sklearn
 
 ```python
-from jasmine import LinearRegression as JasmineLinear, LogisticRegression as JasmineLogistic
+from jasmine.regression import LinearRegression as JasmineLinear, LogisticRegression as JasmineLogistic
 from sklearn.linear_model import LinearRegression as SklearnLinear, LogisticRegression as SklearnLogistic
 from sklearn.datasets import make_regression, make_classification
 import time
