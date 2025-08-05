@@ -31,7 +31,7 @@ from jasmine.datasets import generate_regression
 X, y = generate_regression(n_samples=100, n_features=5, random_state=42)
 model = LinearRegression()
 model.train(X, y)
-print("✅ JASMINE installed successfully!")
+print("JASMINE installed successfully!")
 ```
 
 ## Detailed Installation
@@ -209,8 +209,8 @@ deactivate
 #### Using Conda
 
 ```bash
-# Create environment with specific Python version
-conda create -n jasmine python=3.10 numpy scipy matplotlib
+# Create conda environment with specific Python version
+conda create -n jasmine python=3.10
 
 # Activate environment
 conda activate jasmine
@@ -231,14 +231,14 @@ conda deactivate
 
 | Package | Version | Purpose |
 |---------|---------|---------|
-| **JAX** | ≥ 0.4.0 | Core computation engine |
-| **NumPy** | ≥ 1.21.0 | Numerical operations |
-| **SciPy** | ≥ 1.7.0 | Scientific computing |
+| **JAX** | ≥ 0.4.0 | Core computation engine (includes numerical operations) |
 
 ### Optional Dependencies
 
 | Package | Version | Purpose |
 |---------|---------|---------|
+| **NumPy** | ≥ 1.21.0 | Interoperability with NumPy arrays |
+| **SciPy** | ≥ 1.7.0 | Additional scientific functions |
 | **Matplotlib** | ≥ 3.3.0 | Plotting and visualization |
 | **Scikit-learn** | ≥ 1.0.0 | Comparison benchmarks |
 | **Jupyter** | Latest | Interactive notebooks |
@@ -308,8 +308,7 @@ echo $LD_LIBRARY_PATH
 pip install --no-cache-dir -r requirements.txt
 
 # Or use conda for better memory management
-conda install numpy scipy matplotlib
-pip install jax jaxlib
+conda install jax jaxlib
 pip install -e .
 ```
 
@@ -421,7 +420,7 @@ def test_linear_regression():
     model.train(X, y)
     r2 = model.evaluate(X, y)
     assert r2 > 0.5, f"R² too low: {r2}"
-    print("✅ Linear Regression test passed")
+    print("Linear Regression test passed")
 
 def test_logistic_regression():
     X, y = generate_classification(n_samples=100, n_features=5, random_state=42)
@@ -430,7 +429,7 @@ def test_logistic_regression():
     from jasmine.metrics import accuracy_score
     acc = model.evaluate(X, y, metrics_fn=accuracy_score)
     assert acc > 0.7, f"Accuracy too low: {acc}"
-    print("✅ Logistic Regression test passed")
+    print("Logistic Regression test passed")
 
 def test_preprocessing():
     X, _ = generate_regression(n_samples=100, n_features=5, random_state=42)
@@ -442,14 +441,14 @@ def test_preprocessing():
     
     assert jnp.allclose(mean, 0, atol=1e-6), f"Mean not zero: {mean}"
     assert jnp.allclose(std, 1, atol=1e-6), f"Std not one: {std}"
-    print("✅ StandardScaler test passed")
+    print("StandardScaler test passed")
 
 if __name__ == "__main__":
     print("Running JASMINE installation tests...")
     test_linear_regression()
     test_logistic_regression()  
     test_preprocessing()
-    print("🎉 All tests passed! JASMINE is ready to use.")
+    print("All tests passed! JASMINE is ready to use.")
 ```
 
 Run the test:
@@ -486,9 +485,9 @@ print(f"Second run: {second_time:.3f}s")
 print(f"Speedup: {first_time/second_time:.1f}x")
 
 if first_time/second_time > 5:
-    print("✅ JIT compilation working correctly")
+    print("JIT compilation working correctly")
 else:
-    print("⚠️  JIT speedup lower than expected")
+    print("JIT speedup lower than expected")
 ```
 
 ## Getting Help
@@ -512,4 +511,4 @@ After successful installation:
 3. Check out the [API Reference](api.md)
 4. Run performance tests on your hardware
 
-Enjoy using JASMINE! 🚀
+Enjoy using JASMINE!
