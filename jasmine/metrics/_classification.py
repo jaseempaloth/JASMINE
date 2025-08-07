@@ -63,3 +63,35 @@ def accuracy_score(y_true, y_pred):
         float: Computed accuracy score.
     """
     return jnp.mean(y_true == y_pred)
+
+@jax.jit
+def euclidean_distance(x1: jnp.ndarray, x2: jnp.ndarray) -> jnp.ndarray:
+    """
+    Computes the squared Euclidean distance between a single point and a batch of points.
+
+    Note: We use squared Euclidean distance because it's computationally cheaper
+    (avoids the square root) and preserves the ranking of distances, which is
+    all that KNN needs to find the nearest neighbors.
+    
+    Args:
+        x1 (jnp.ndarray): A single data point of shape (n_features,).
+        x2 (jnp.ndarray): A batch of data points of shape (n_samples, n_features).
+        
+    Returns:
+        jnp.ndarray: Computed Euclidean distance(n_samples,).
+    """
+    return jnp.sum((x1 - x2) ** 2, axis=1)
+
+@jax.jit
+def manhattan_distance(x1: jnp.ndarray, x2: jnp.ndarray) -> jnp.ndarray:
+    """
+    Computes the Manhattan distance between a single point and a batch of points.
+    
+    Args:
+        x1 (jnp.ndarray): A single data point of shape (n_features,).
+        x2 (jnp.ndarray): A batch of data points of shape (n_samples, n_features).
+        
+    Returns:
+        jnp.ndarray: Computed Manhattan distance(n_samples,).
+    """
+    return jnp.sum(jnp.abs(x1 - x2), axis=1)
