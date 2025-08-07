@@ -24,6 +24,7 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.pytest_cache/
 nosetests.xml
 coverage.xml
 *.cover
@@ -49,6 +50,10 @@ coverage.xml
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Documentation builds
+docs/_build/
+docs/api/generated/
 
 # Project specific
 *.log
