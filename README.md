@@ -46,13 +46,13 @@ pip install -e .
 
 ## Documentation
 
-📖 **Complete documentation is available at [jasmine.readthedocs.io](https://jasmine.readthedocs.io)**
+📖 **Complete documentation is available at [jasmine.readthedocs.io](https://jasmine-ml.readthedocs.io)**
 
 **Quick Links:**
-- 🚀 [Quick Start Guide](https://jasmine.readthedocs.io/en/latest/quickstart.html) - Get up and running in 5 minutes
-- 📚 [API Reference](https://jasmine.readthedocs.io/en/latest/api/) - Complete function and class documentation  
-- 📝 [Examples & Tutorials](https://jasmine.readthedocs.io/en/latest/examples.html) - Detailed use cases and best practices
-- 💾 [Installation Guide](https://jasmine.readthedocs.io/en/latest/installation.html) - Platform-specific setup instructions
+- 🚀 [Quick Start Guide](https://jasmine-ml.readthedocs.io/en/latest/quickstart.html) - Get up and running in 5 minutes
+- 📚 [API Reference](https://jasmine-ml.readthedocs.io/en/latest/api/) - Complete function and class documentation  
+- 📝 [Examples & Tutorials](https://jasmine-ml.readthedocs.io/en/latest/examples.html) - Detailed use cases and best practices
+- 💾 [Installation Guide](https://jasmine-ml.readthedocs.io/en/latest/installation.html) - Platform-specific setup instructions
 
 ## Requirements
 
