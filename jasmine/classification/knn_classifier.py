@@ -10,21 +10,21 @@ class KNNClassifier:
     
     Args:
         n_neighbors (int): Number of neighbors to use for classification.
-        metric (str): Distance metric to use ('euclidean', 'manhattan', etc.).
+        metric (Callable): Distance metric function to use.
         random_state (Optional[int]): Random seed for reproducibility.
     """
     def __init__(
             self, 
             n_neighbors: int = 5,
-            metric = euclidean_distance,
+            metric: Callable = euclidean_distance,
             random_state: Optional[int] = None
         ):
         self.n_neighbors = n_neighbors
         self.metric = metric
         self.random_state = random_state
 
-        X_train = None
-        y_train = None
+        self.X_train = None
+        self.y_train = None
         self.n_classes = None
 
     def train(self, X: jnp.ndarray, y: jnp.ndarray):
@@ -37,7 +37,7 @@ class KNNClassifier:
         """
         self.X_train = X
         self.y_train = y
-        self.n_classes = (jnp.max(y) + 1).item()
+        self.n_classes = int(jnp.max(y) + 1)
         return self
     
     def inference(self, X_test: jnp.ndarray) -> jnp.ndarray:
@@ -53,15 +53,17 @@ class KNNClassifier:
         if self.X_train is None or self.y_train is None:
             raise ValueError("Model must be trained before inference.")
         
-        # Vectorize the prediction logic over the entire batch of test points.
-        vectorized_predict = jax.vmap(
-            self.predict_single, in_axes=(0, None, None, None, None, None)
+        # Create a partial function with fixed parameters
+        preditc_fn = lambda x: self.predict_single(
+            x, self.X_train, self.y_train, self.n_neighbors, self.n_classes, self.metric
         )
 
-        return vectorized_predict(X_test, self.X_train, self.y_train, self.n_neighbors, self.n_classes, self.metric)
+        # Vectorize the prediction logic over the entire batch of test points
+        vectorized_predict = jax.vmap(preditc_fn)
+
+        return vectorized_predict(X_test)
     
     @staticmethod
-    @jax.jit
     def predict_single(x_test_single: jnp.ndarray, X_train: jnp.ndarray, y_train: jnp.ndarray, n_neighbors: int, n_classes: int, metric: Callable) -> int:
         """
         Predict the label for a single test instance.
@@ -78,7 +80,7 @@ class KNNClassifier:
             jnp.ndarray: Predicted label for the test instance.
         """
         # Compute distances from the test instance to all training instances
-        distances = metric(x_test_single, X_train)
+        distances = jax.vmap(lambda x_train: metric(x_test_single, x_train))(X_train)
         
         # Get indices of the nearest neighbors
         neighbor_indices = jnp.argsort(distances)[:n_neighbors]
@@ -87,7 +89,7 @@ class KNNClassifier:
         neighbor_labels = y_train[neighbor_indices]
         
         # Vote for the majority class.
-        votes = jnp.bincount(neighbor_labels, minlength=n_classes)
+        votes = jnp.bincount(neighbor_labels, length=n_classes)
         
         # Return the voted class label
         return jnp.argmax(votes)
