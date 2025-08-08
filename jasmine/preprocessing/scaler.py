@@ -33,7 +33,7 @@ def fit_fn(X: jnp.ndarray, epsilon: float = 1e-8) -> ScalarParams:
     return {'mean': mean, 'scale': scale}
 
 @partial(jax.jit)
-def transform_fn(X: jnp.ndarray, params: ScalarParams) -> jnp. ndarray:
+def transform_fn(X: jnp.ndarray, params: ScalarParams) -> jnp.ndarray:
     """
     Pure function to transform data using the fitted parameters.
     
