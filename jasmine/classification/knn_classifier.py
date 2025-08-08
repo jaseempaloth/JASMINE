@@ -53,45 +53,48 @@ class KNNClassifier:
         if self.X_train is None or self.y_train is None:
             raise ValueError("Model must be trained before inference.")
         
-        # Create a partial function with fixed parameters
-        preditc_fn = lambda x: self.predict_single(
+        # Create a per-sample prediction function and vectorize over test samples
+        predict_fn = lambda x: self.predict_single(
             x, self.X_train, self.y_train, self.n_neighbors, self.n_classes, self.metric
         )
-
-        # Vectorize the prediction logic over the entire batch of test points
-        vectorized_predict = jax.vmap(preditc_fn)
-
-        return vectorized_predict(X_test)
+        return jax.vmap(predict_fn)(X_test)
     
     @staticmethod
-    def predict_single(x_test_single: jnp.ndarray, X_train: jnp.ndarray, y_train: jnp.ndarray, n_neighbors: int, n_classes: int, metric: Callable) -> int:
+    def predict_single(
+        x_test_single: jnp.ndarray,
+        X_train: jnp.ndarray,
+        y_train: jnp.ndarray,
+        n_neighbors: int,
+        n_classes: int,
+        metric: Callable,
+    ) -> jnp.ndarray:
         """
         Predict the label for a single test instance.
-        
+
         Args:
-            x_test_single (jnp.ndarray): Single test instance of shape (n_features,).
-            X_train (jnp.ndarray): Training features of shape (n_samples, n_features).
-            y_train (jnp.ndarray): Training labels of shape (n_samples,).
-            n_neighbors (int): Number of neighbors to consider.
-            n_classes (int): Number of classes in the dataset.
-            metric (Callable): Distance metric function.
-        
+            x_test_single: Single test instance of shape (n_features,).
+            X_train: Training features of shape (n_samples, n_features).
+            y_train: Training labels of shape (n_samples,).
+            n_neighbors: Number of neighbors to consider.
+            n_classes: Number of classes in the dataset.
+            metric: Distance metric function.
+
         Returns:
-            jnp.ndarray: Predicted label for the test instance.
+            Predicted label for the test instance (scalar jnp.ndarray).
         """
-        # Compute distances from the test instance to all training instances
-        distances = jax.vmap(lambda x_train: metric(x_test_single, x_train))(X_train)
-        
+        # Compute distances from the test instance to all training instances.
+        distances = metric(x_test_single, X_train)
+
         # Get indices of the nearest neighbors
         neighbor_indices = jnp.argsort(distances)[:n_neighbors]
-        
+
         # Get the labels of the nearest neighbors
         neighbor_labels = y_train[neighbor_indices]
-        
+
         # Vote for the majority class.
         votes = jnp.bincount(neighbor_labels, length=n_classes)
-        
-        # Return the voted class label
+
+        # Return the voted class label as a JAX scalar (works under vmap)
         return jnp.argmax(votes)
     
     def evaluate(self, X: jnp.ndarray, y: jnp.ndarray, metric_fn=accuracy_score) -> float:
