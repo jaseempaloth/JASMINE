@@ -3,6 +3,7 @@ import jax.numpy as jnp
 import os
 import time
 from typing import Callable, Optional, Dict, Tuple
+from jasmine.metrics import accuracy_score
 
 @jax.jit
 def hinge_loss(y_true: jnp.ndarray,
@@ -128,7 +129,117 @@ class SVMClassifier:
 
             return data_loss + reg_loss
     
+    def train(self, X: jnp.ndarray, y: jnp.ndarray,
+              validation_data: Optional[Tuple] = None,
+              early_stopping_patience: Optional[int] = None,
+              verbose: int = 1):
+        """
+        Train the SVM classifier.
+
+        Important: The labels `y` must be transformed to {-1, 1}.
+
+        Args:
+            X (jnp.ndarray): Input features
+            y (jnp.ndarray): Target labels
+            validation_data (tuple, optional): Tuple of (X_val, y_val) for validation
+            early_stopping_patience (int, optional): Number of epochs with no improvement to wait before stopping
+            verbose (int): Verbosity level
+
+        Returns:
+            dict: Fitted model parameters
+        """
+        if not jnp.all((y == - 1) |(y == 1)):
+            raise ValueError("Labels must be in the set {-1, 1}.")
+        
+        current_params = self.init_params(X.shape[1])
+        history = {"loss": [], "val_loss": []}
+
+        best_val_loss = float("inf")
+        epochs_no_improve = 0
+        best_params = None
+
+        @jax.jit
+        def update_step(params, X, y):
+            grads = jax.grad(self.loss_fn)(params, X, y)
+            return jax.tree_util.tree_map(
+                lambda p, g: p - self.learning_rate * g, params, grads
+            )
+        
+        start_time = time.time()
+        for epoch in range(self.n_epochs):
+            current_params = update_step(current_params, X, y)
+            train_loss = self.loss_fn(current_params, X, y)
+            history['loss'].append(train_loss)
+            log_msg = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
+
+            if validation_data is not None:
+                x_val, y_val = validation_data
+                val_loss = self.loss_fn(current_params, x_val, y_val)
+                history['val_loss'].append(val_loss)
+                log_msg += f" - Val Loss: {val_loss:.4f}"
+            
+                if early_stopping_patience is not None:
+                    if val_loss < best_val_loss:
+                        best_val_loss = val_loss
+                        epochs_no_improve = 0
+                        best_params = current_params
+                    else:
+                        epochs_no_improve += 1
+
+                    if epochs_no_improve >= early_stopping_patience:
+                        if verbose > 0:
+                            print(f"\nEarly stopping triggered after {epoch+1} epochs.")
+                        self.params = best_params
+                        return history
+            
+            if verbose > 0:
+                print(log_msg, end='\r')
+
+        if verbose > 0:
+            total_time = time.time() - start_time
+            print(f"\nTraining completed in {total_time:.2f} seconds.")
+        
+        self.params = best_params if best_params is not None else current_params
+        return history
     
+    def inference(self, X: jnp.ndarray) -> jnp.ndarray:
+        """
+        Make predictions using the trained model.
+        
+        Args:
+            X (jnp.ndarray): Input features
+            
+        Returns:
+            jnp.ndarray: Predicted values
+        """
+        if self.params is None:
+            raise ValueError("Model has not been trained yet. Call `train` before calling `inference`.")
+        
+        scores = self.forward(self.params, X)
+        return jnp.sign(scores).astype(int)
+    
+    def evaluate(self, X: jnp.ndarray, y: jnp.ndarray, metrics_fn=accuracy_score) -> float:
+        """
+        Evaluate the model using the specified metrics function.
+        
+        Args:
+            X (jnp.ndarray): Input features
+            y (jnp.ndarray): True labels
+            metrics_fn (callable): Metrics function to compute the score
+            
+        Returns:
+            float: Computed metrics score
+        """
+        if self.params is None:
+            raise ValueError("Model has not been trained yet. Call `train` before calling `evaluate`.")
+        
+        class_predictions = self.inference(X)
+        return metrics_fn(y, class_predictions)
+    
+
+            
+
+
 
 
         
