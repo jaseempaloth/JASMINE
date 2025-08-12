@@ -3,11 +3,11 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![JAX](https://img.shields.io/badge/JAX-latest-orange.svg)](https://github.com/google/jax)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Documentation](https://img.shields.io/badge/docs-jasmine-brightgreen.svg)](https://jasmine.readthedocs.io)
+[![Documentation](https://img.shields.io/badge/docs-jasmine-brightgreen.svg)](https://jasmine-ml.readthedocs.io)
 
 JASMINE is a high-performance machine learning library built on JAX, designed to leverage GPU and TPU acceleration for statistical modeling and neural computation.
 
-📖 **[Read the Documentation](https://jasmine.readthedocs.io)** | 🚀 **[Quick Start](https://jasmine.readthedocs.io/en/latest/quickstart.html)** | 📚 **[API Reference](https://jasmine.readthedocs.io/en/latest/api/)**
+📖 **[Read the Documentation](https://jasmine-ml.readthedocs.io)** | 🚀 **[Quick Start](https://jasmine-ml.readthedocs.io/en/latest/quickstart.html)** | 📚 **[API Reference](https://jasmine-ml.readthedocs.io/en/latest/api/)**
 
 ## Features
 
@@ -58,7 +58,6 @@ pip install -e .
 
 - Python 3.8+
 - JAX >= 0.4.0
-- NumPy >= 1.21.0
 
 ## License
 
