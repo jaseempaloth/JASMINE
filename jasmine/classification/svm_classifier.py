@@ -121,12 +121,12 @@ class SVMClassifier:
             sample_weights = jnp.where(y == 1, weight_pos, weight_neg)            
             
             # Calculate the data loss using the specified loss function, scaled by C
-            data_loss = self.C * self.loss_function(y, scores, sample_weights)
+        data_loss = self.C * self.loss_function(y, scores, sample_weights)
 
-            # Add L2 penalty (weight decay)
-            reg_loss = 0.5 * jnp.sum(params["w"] ** 2)
+        # Add L2 penalty (weight decay)
+        reg_loss = 0.5 * jnp.sum(params["w"] ** 2)
 
-            return data_loss + reg_loss
+        return data_loss + reg_loss
     
     def train(self, X: jnp.ndarray, y: jnp.ndarray,
               validation_data: Optional[Tuple] = None,
@@ -147,7 +147,7 @@ class SVMClassifier:
         Returns:
             dict: Fitted model parameters
         """
-        if not jnp.all((y == - 1) |(y == 1)):
+        if not jnp.all((y == 1) |(y == - 1)):
             raise ValueError("Labels must be in the set {-1, 1}.")
         
         current_params = self.init_params(X.shape[1])
@@ -172,8 +172,8 @@ class SVMClassifier:
             log_msg = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
 
             if validation_data is not None:
-                x_val, y_val = validation_data
-                val_loss = self.loss_fn(current_params, x_val, y_val)
+                X_val, y_val = validation_data
+                val_loss = self.loss_fn(current_params, X_val, y_val)
                 history['val_loss'].append(val_loss)
                 log_msg += f" - Val Loss: {val_loss:.4f}"
             
