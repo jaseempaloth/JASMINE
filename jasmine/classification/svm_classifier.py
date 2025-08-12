@@ -88,10 +88,9 @@ class SVMClassifier:
             key = jax.random.PRNGKey(random_state)
         w_key, _ = jax.random.split(key)
         params = {
-            "w": jax.random.normal(w_key, (n_features,))
-        }
-        if self.use_bias:
-            params["b"] = jnp.array(0.0)        
+            "w": jax.random.normal(w_key, (n_features,)),
+            "b": jnp.array(0.0)
+        }      
         return params
     
     @staticmethod
