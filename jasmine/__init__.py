@@ -23,7 +23,7 @@ __license__ = 'MIT'
 
 # Core imports
 from .regression import LinearRegression
-from .classification import LogisticRegression, KNNClassifier
+from .classification import LogisticRegression, KNNClassifier, SVMClassifier
 from .metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score, \
     binary_cross_entropy, categorical_cross_entropy, accuracy_score
 from .selection import train_test_split
@@ -34,6 +34,7 @@ __all__ = [
     'LinearRegression',
     'LogisticRegression',
     'KNNClassifier',
+    'SVMClassifier',
     'train_test_split',
     'mean_squared_error',
     'mean_absolute_error',
