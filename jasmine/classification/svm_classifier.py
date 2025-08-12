@@ -75,7 +75,7 @@ class SVMClassifier:
         self.loss_function = loss_function
         self.params = None
     
-    def __init__(self, n_features: int, key: Optional[jax.random.PRNGKey] = None):
+    def init_params(self, n_features: int, key: Optional[jax.random.PRNGKey] = None):
         """
         Initialize model parameters.
         
