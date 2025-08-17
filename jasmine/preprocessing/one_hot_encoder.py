@@ -99,14 +99,14 @@ class OneHotEncoder:
     """
     def __init__(self,
             categories: Union[str, List[jnp.ndarray]] = 'auto',
-            handile_unknown: str = 'error',
+            handle_unknown: str = 'error',
             dtype: jnp.dtype = jnp.float32):
-        
-        if handile_unknown not in ['error', 'ignore']:
+
+        if handle_unknown not in ['error', 'ignore']:
             raise ValueError("`handle_unknown` must be 'error' or 'ignore'")
         
         self.categories = categories
-        self.handle_unknown = handile_unknown
+        self.handle_unknown = handle_unknown
         self.dtype = dtype
         self.params: Optional[EncoderParams] = None
 
@@ -139,13 +139,19 @@ class OneHotEncoder:
         if self.handle_unknown == 'error':
             # Perform the check for unknown categories outside the JIT-compiled function.
             for i, cats in enumerate(self.params['categories']):
-                # Find unique values in the column to be transformed
-                unique_values = jnp.unique(X[:, i])
-                # Check if any of these unique values are not in the learned categories
-                is_unknown = ~jnp.isin(unique_values, cats)
-                if jnp.any(is_unknown):
-                    unknown_value = unique_values[jnp.argmax(is_unknown)]
-                    raise ValueError(f"Found unknown category {unknown_value} in feature {i} during transform.")
+                feature_column = X[:, i]
+                if feature_column.dtype.kind in ["U", "S", "O"]:
+                    # Use NumPy for string/object categories
+                    is_unknown = ~np.isin(np.array(feature_column), np.array(cats))
+                    if np.any(is_unknown):
+                        unknown_value = np.array(feature_column)[np.argmax(is_unknown)]
+                        raise ValueError(f"Found unknown category {unknown_value} in feature {i} during")
+                else:
+                    # Use JAX for numeric categories
+                    is_unknown = ~jnp.isin(feature_column, cats)
+                    if jnp.any(is_unknown):
+                        unknown_value = feature_column[jnp.argmax(is_unknown)]
+                        raise ValueError(f"Found unknown category {unknown_value} in feature {i} during transform.")
         
         return transform_fn(X, self.params, self.dtype)
     
