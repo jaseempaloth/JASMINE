@@ -28,7 +28,7 @@ from .metrics import mean_squared_error, mean_absolute_error, root_mean_squared_
     binary_cross_entropy, categorical_cross_entropy, accuracy_score
 from .selection import train_test_split
 from .datasets import generate_regression, generate_polynomial, generate_classification
-from .preprocessing import StandardScaler
+from .preprocessing import StandardScaler, OneHotEncoder
 # Public API
 __all__ = [
     'LinearRegression',
@@ -46,6 +46,7 @@ __all__ = [
     'generate_regression',
     'generate_polynomial',
     'generate_classification',
-    'StandardScaler'
+    'StandardScaler',
+    'OneHotEncoder'
 ]
 
