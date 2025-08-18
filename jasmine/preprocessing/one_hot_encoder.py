@@ -152,8 +152,18 @@ class OneHotEncoder:
                     if jnp.any(is_unknown):
                         unknown_value = feature_column[jnp.argmax(is_unknown)]
                         raise ValueError(f"Found unknown category {unknown_value} in feature {i} during transform.")
-        
-        return transform_fn(X, self.params, self.dtype)
+                    
+        if X.dtype.kind in ["U", "S", "O"]:
+            # Handle strings with NumPy
+            output_arrays = []
+            for i, cats in enumerate(self.params['categories']):
+                feature_column = X[:, i]
+                one_hot_matrix = (feature_column[:, None] == np.array(cats)).astype(self.dtype)
+                output_arrays.append(one_hot_matrix)
+            return np.concatenate(output_arrays, axis=1)
+        else:
+            # Handle numbers with JAX (JIT-compiled)        
+            return transform_fn(X, self.params, self.dtype)
     
     def fit_transform(self, X: jnp.ndarray) -> jnp.ndarray:
         """
