@@ -122,10 +122,11 @@ class LinearRegression:
             # Get the new, updated parameters from the pure function
             current_params = update_step(current_params, X, y)
 
-            # Logging and validation - only compute loss when needed for logging or validation
+            # Logging and validation - compute loss when needed for logging, validation, or history tracking
             should_log = verbose > 0 and (epoch + 1) % print_interval == 0
+            should_compute_loss = validation_data is not None or should_log or (epoch == self.n_epochs - 1)
             
-            if validation_data is not None or should_log:
+            if should_compute_loss:
                 train_loss = self.loss_fn(current_params, X, y)
                 history["loss"].append(train_loss)
 
