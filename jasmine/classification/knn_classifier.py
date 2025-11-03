@@ -1,6 +1,5 @@
 import jax
 import jax.numpy as jnp
-import time
 from typing import Optional, Callable
 from jasmine.metrics import euclidean_distance, manhattan_distance, accuracy_score
 
@@ -53,37 +52,27 @@ class KNNClassifier:
         if self.X_train is None or self.y_train is None:
             raise ValueError("Model must be trained before inference.")
         
-        # Create a per-sample prediction function and vectorize over test samples
-        predict_fn = lambda x: self.predict_single(
-            x, self.X_train, self.y_train, self.n_neighbors, self.n_classes, self.metric
-        )
+        # Create a per-sample prediction function with partial application
+        # Note: We need to handle the metric function carefully
+        def predict_fn(x):
+            return self._predict_single_impl(
+                x, self.X_train, self.y_train, self.n_neighbors, self.n_classes
+            )
         return jax.vmap(predict_fn)(X_test)
     
-    @staticmethod
-    def predict_single(
+    def _predict_single_impl(
+        self,
         x_test_single: jnp.ndarray,
         X_train: jnp.ndarray,
         y_train: jnp.ndarray,
         n_neighbors: int,
         n_classes: int,
-        metric: Callable,
     ) -> jnp.ndarray:
         """
-        Predict the label for a single test instance.
-
-        Args:
-            x_test_single: Single test instance of shape (n_features,).
-            X_train: Training features of shape (n_samples, n_features).
-            y_train: Training labels of shape (n_samples,).
-            n_neighbors: Number of neighbors to consider.
-            n_classes: Number of classes in the dataset.
-            metric: Distance metric function.
-
-        Returns:
-            Predicted label for the test instance (scalar jnp.ndarray).
+        Internal implementation for predicting a single sample.
         """
         # Compute distances from the test instance to all training instances.
-        distances = metric(x_test_single, X_train)
+        distances = self.metric(x_test_single, X_train)
 
         # Get indices of the nearest neighbors
         neighbor_indices = jnp.argsort(distances)[:n_neighbors]
@@ -94,7 +83,7 @@ class KNNClassifier:
         # Vote for the majority class.
         votes = jnp.bincount(neighbor_labels, length=n_classes)
 
-        # Return the voted class label as a JAX scalar (works under vmap)
+        # Return the voted class label
         return jnp.argmax(votes)
     
     def evaluate(self, X: jnp.ndarray, y: jnp.ndarray, metric_fn=accuracy_score) -> float:

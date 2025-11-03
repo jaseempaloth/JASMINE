@@ -1,7 +1,6 @@
 import jax
 import jax.numpy as jnp
 import os
-import time
 from typing import Callable, Optional, Dict, Tuple
 from jasmine.metrics import accuracy_score
 
@@ -164,18 +163,22 @@ class SVMClassifier:
                 lambda p, g: p - self.learning_rate * g, params, grads
             )
         
-        start_time = time.time()
+        print_interval = max(1, self.n_epochs // 10) if verbose > 0 else self.n_epochs
+        
         for epoch in range(self.n_epochs):
             current_params = update_step(current_params, X, y)
-            train_loss = self.loss_fn(current_params, X, y)
-            history['loss'].append(train_loss)
-            log_msg = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
+            
+            # Only compute loss when needed for logging or validation
+            should_log = verbose > 0 and (epoch + 1) % print_interval == 0
+            
+            if validation_data is not None or should_log:
+                train_loss = self.loss_fn(current_params, X, y)
+                history['loss'].append(train_loss)
 
             if validation_data is not None:
                 X_val, y_val = validation_data
                 val_loss = self.loss_fn(current_params, X_val, y_val)
                 history['val_loss'].append(val_loss)
-                log_msg += f" - Val Loss: {val_loss:.4f}"
             
                 if early_stopping_patience is not None:
                     if val_loss < best_val_loss:
@@ -191,12 +194,14 @@ class SVMClassifier:
                         self.params = best_params
                         return history
             
-            if verbose > 0:
+            if should_log:
+                log_msg = f"Epoch {epoch + 1:4d}/{self.n_epochs} - Loss: {train_loss:.6f}"
+                if validation_data is not None:
+                    log_msg += f" - Val Loss: {val_loss:.6f}"
                 print(log_msg, end='\r')
 
         if verbose > 0:
-            total_time = time.time() - start_time
-            print(f"\nTraining completed in {total_time:.2f} seconds.")
+            print()
         
         self.params = best_params if best_params is not None else current_params
         return history

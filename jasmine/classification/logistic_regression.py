@@ -2,7 +2,6 @@ import jax
 import jax.numpy as jnp
 import jax.nn
 from jasmine.metrics import binary_cross_entropy, accuracy_score
-import time
 import os
 
 class LogisticRegression:
@@ -118,27 +117,30 @@ class LogisticRegression:
                 lambda p, g: p - self.learning_rate * g, params, grads
             )
 
-        start_time = time.time()
+        # Training loop
         print_interval = max(1, self.n_epochs // 10) if verbose > 0 else self.n_epochs
         
         for epoch in range(self.n_epochs):
             try:
                 current_params = update_step(current_params, X, y)
-                train_loss = self.loss_fn(current_params, X, y)
-                # Check for NaN or Inf in loss
-                if jnp.isnan(train_loss) or jnp.isinf(train_loss):
-                    print(f"Loss is NaN or Inf at epoch {epoch + 1}. Stopping training.")
-                    break
-
-                history["loss"].append(train_loss)
-                log_msg = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
+                
+                # Only compute loss when needed for logging or validation
+                should_log = verbose > 0 and (epoch + 1) % print_interval == 0
+                
+                if validation_data is not None or should_log:
+                    train_loss = self.loss_fn(current_params, X, y)
+                    # Check for NaN or Inf in loss
+                    if jnp.isnan(train_loss) or jnp.isinf(train_loss):
+                        print(f"\nLoss is NaN or Inf at epoch {epoch + 1}. Stopping training.")
+                        break
+                    
+                    history["loss"].append(train_loss)
 
                 # Validation step
                 if validation_data is not None:
                     X_val, y_val = validation_data
                     val_loss = self.loss_fn(current_params, X_val, y_val)
                     history["val_loss"].append(val_loss)
-                    log_msg += f" - Val Loss: {val_loss:.4f}"
 
                     if early_stopping_patience is not None:
                         if val_loss < best_val_loss:
@@ -154,7 +156,7 @@ class LogisticRegression:
                             self.params = best_params
                             return history
                 
-                if verbose > 0 and (epoch + 1) % print_interval == 0:
+                if should_log:
                     log_msg = f"Epoch {epoch + 1:4d}/{self.n_epochs} - Loss: {train_loss:.6f}"
                     if validation_data is not None:
                         log_msg += f" - Val Loss: {val_loss:.6f}"
@@ -165,8 +167,7 @@ class LogisticRegression:
                 break
 
         if verbose > 0:
-            total_time = time.time() - start_time
-            print(f"\nTraining completed in {total_time:.2f} seconds.")
+            print()
             
         self.params = best_params if best_params is not None else current_params
         return history

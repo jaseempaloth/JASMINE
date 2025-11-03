@@ -1,7 +1,6 @@
 import jax 
 import jax.numpy as jnp
 from jasmine.metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score
-import time
 
 class LinearRegression:
     def __init__(self, use_bias=True, learning_rate=0.01, n_epochs=1000, loss_function=mean_squared_error, l1_penalty=0.0, l2_penalty=0.0):
@@ -39,6 +38,7 @@ class LinearRegression:
         return params
 
     @staticmethod
+    @jax.jit
     def forward(params, X):
         """
         Forward pass for the linear model.
@@ -51,9 +51,6 @@ class LinearRegression:
             jnp.ndarray: Predicted values
         """
         use_bias = "b" in params and params["b"] is not None
-
-        if params["w"] is None:
-            raise ValueError("Model weights must be initialized before calling forward.")
         
         if use_bias:
             return X @ params["w"] + params["b"]
@@ -119,22 +116,23 @@ class LinearRegression:
             )
 
         # Training loop
-        start_time = time.time()
+        print_interval = max(1, self.n_epochs // 10) if verbose > 0 else self.n_epochs
+        
         for epoch in range(self.n_epochs):
             # Get the new, updated parameters from the pure function
             current_params = update_step(current_params, X, y)
 
-            # Logging and validation
-            train_loss = self.loss_fn(current_params, X, y)
-            history["loss"].append(train_loss)
-
-            log_message = f"Epoch {epoch + 1}/{self.n_epochs} - Loss: {train_loss:.4f}"
+            # Logging and validation - only compute loss when needed for logging or validation
+            should_log = verbose > 0 and (epoch + 1) % print_interval == 0
+            
+            if validation_data is not None or should_log:
+                train_loss = self.loss_fn(current_params, X, y)
+                history["loss"].append(train_loss)
 
             if validation_data is not None:
                 X_val, y_val = validation_data
                 val_loss = self.loss_fn(current_params, X_val, y_val)
                 history["val_loss"].append(val_loss)
-                log_message += f" - Val Loss: {val_loss:.4f}"
 
                 # Early stopping logic
                 if early_stopping_patience is not None:
@@ -147,17 +145,19 @@ class LinearRegression:
                     
                     if epochs_no_improve >= early_stopping_patience:
                         if verbose > 0:
-                            print(f"Early stopping at epoch {epoch + 1}. Best Val Loss: {best_val_loss:.4f}")
+                            print(f"\nEarly stopping at epoch {epoch + 1}. Best Val Loss: {best_val_loss:.4f}")
                         # Restore best parameters if early stopping is triggered
                         self.params = best_params
                         return history
             
-            if verbose > 0:
+            if should_log:
+                log_message = f"Epoch {epoch + 1:4d}/{self.n_epochs} - Loss: {train_loss:.6f}"
+                if validation_data is not None:
+                    log_message += f" - Val Loss: {val_loss:.6f}"
                 print(log_message, end="\r")
         
         if verbose > 0:
-            total_time = time.time() - start_time
-            print(f"\nTraining completed in {total_time:.2f} seconds.")
+            print()
         
         self.params = best_params if best_params is not None else current_params
         return history

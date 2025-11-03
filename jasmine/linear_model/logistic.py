@@ -35,23 +35,6 @@ class LogisticRegression:
         else:
             return jax.nn.softmax(logits)
 
-    
-    def _update_params(self, params, X, y, learning_rate):
-        """
-        Update model parameters using gradient descent. This helper function is JIT-compiled.
-
-        Args:
-            params (jnp.ndarray): Current model parameters.
-            X (jnp.ndarray): Input features.
-            y (jnp.ndarray): Target values.
-            learning_rate (float): Learning rate for gradient descent.
-        
-        Returns:
-            jnp.ndarray: Updated parameters.
-        """
-        grads = self.loss.grad(params, X, y, self)
-        return params - learning_rate * grads 
-    
     def fit(self, X, y, learning_rate=0.01, max_iter=1000, tol=1e-4):
         """
         Fit the logistic regression model using gradient descent.
@@ -72,11 +55,17 @@ class LogisticRegression:
         else:
             params = jnp.zeros(X.shape[1])
         
+        # JIT-compiled update step
+        @jax.jit
+        def update_step(params, X, y):
+            grads = self.loss.grad(params, X, y, self)
+            return params - learning_rate * grads
+        
         # Gradient descent loop
         prev_loss = float('inf')
         for i in range(max_iter):
-            # Use the _update_params helper function to update parameters
-            params = self._update_params(params, X, y, learning_rate)
+            # Use the update step to update parameters
+            params = update_step(params, X, y)
             # Compute loss
             current_loss = self.loss(params, X, y, self)
             # Check for convergence

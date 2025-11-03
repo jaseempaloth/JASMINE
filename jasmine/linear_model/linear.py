@@ -53,15 +53,19 @@ class LinearRegression:
         else:
             params = {'weights': jnp.zeros(X.shape[1])}
         
+        # JIT-compiled update step
+        @jax.jit
+        def update_step(params, X, y):
+            grads = self.loss.compute_grad(params, X, y, self)
+            return jax.tree_util.tree_map(
+                lambda p, g: p - learning_rate * g, params, grads
+            )
+        
         # Gradient descent loop
         prev_loss = float('inf')
         for i in range(max_iter):
-            # Compute gradients
-            grads = self.loss.compute_grad(params, X, y, self)
-            
             # Update parameters
-            for key in params:
-                params[key] = params[key] - learning_rate * grads[key]
+            params = update_step(params, X, y)
 
             # Check for convergence
             current_loss = self.loss(params, X, y, self)
