@@ -60,3 +60,4 @@ docs/api/generated/
 *.hdf5
 *.pkl
 *.npy
+.venv
