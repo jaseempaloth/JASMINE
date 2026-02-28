@@ -1,7 +1,5 @@
-import jax
-import jax.numpy
 import numpy as np
-from jasmine.preprocessing.one_hot_encoder import OneHotEncoder
+from jasmine.preprocessing import OneHotEncoder
 
 def main():
     data = np.array([
@@ -17,7 +15,7 @@ def main():
     encoder = OneHotEncoder()
     transformed_data = encoder.fit_transform(data)
 
-    print("Tranformed Data")
+    print("Transformed Data")
     print(transformed_data)
 
 if __name__ == "__main__":

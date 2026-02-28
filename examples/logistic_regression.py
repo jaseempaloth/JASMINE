@@ -1,7 +1,7 @@
 import jax.numpy as jnp
-from jasmine.classification import LogisticRegression
-from jasmine.metrics import binary_cross_entropy, accuracy_score
-from jasmine.selection import train_test_split
+from jasmine.linear_model import LogisticRegression
+from jasmine.metrics import accuracy_score
+from jasmine.model_selection import train_test_split
 from jasmine.datasets import generate_classification
 
 def main():
@@ -34,8 +34,8 @@ def main():
     print("Learned Bias:", model.params.get("b", "No bias term"))
 
     # Make predictions on the test set
-    logits = model.inference(X_test)
-    print(f"Logits shape: {logits.shape}")
+    predictions = model.inference(X_test)
+    print(f"Predictions shape: {predictions.shape}")
 
     # Evaluate the model
     accuracy = model.evaluate(X_test, y_test, metrics_fn=accuracy_score)

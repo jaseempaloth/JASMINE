@@ -70,8 +70,8 @@ Preprocessing Pipeline
 .. code-block:: python
 
    from jasmine.preprocessing import StandardScaler
-   from jasmine.regression import LinearRegression
-   from jasmine.selection import train_test_split
+   from jasmine.linear_model import LinearRegression
+   from jasmine.model_selection import train_test_split
    
    # Split data
    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)

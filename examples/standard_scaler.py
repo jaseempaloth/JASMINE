@@ -1,6 +1,6 @@
 import jax
 import jax.numpy as jnp
-from jasmine.preprocessing.scaler import StandardScaler
+from jasmine.preprocessing import StandardScaler
 
 #. Generate some random data
 key = jax.random.PRNGKey(42)

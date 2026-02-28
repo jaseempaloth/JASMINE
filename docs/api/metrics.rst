@@ -120,7 +120,7 @@ Using with Models
 
 .. code-block:: python
 
-   from jasmine.regression import LinearRegression
+   from jasmine.linear_model import LinearRegression
    from jasmine.metrics import mean_squared_error
    
    # Train model

@@ -21,7 +21,7 @@ JASMINE is a high-performance machine learning library built on JAX, designed to
 ## Quick Start
 
 ```python
-from jasmine import LinearRegression, LogisticRegression
+from jasmine.linear_model import LogisticRegression
 from jasmine.datasets import generate_classification
 
 # Generate data and train model
@@ -71,4 +71,3 @@ JASMINE is a lightweight machine learning library built on top of JAX, designed 
 - Core components for model development, training, and evaluation
 - Data preprocessing utilities
 - Automatic differentiation powered by JAX
-

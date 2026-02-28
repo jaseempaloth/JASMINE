@@ -1,7 +1,7 @@
-import jax
 import jax.numpy as jnp
-from jasmine import LinearRegression, mean_squared_error
-from jasmine.selection import train_test_split
+from jasmine.linear_model import LinearRegression
+from jasmine.metrics import mean_squared_error
+from jasmine.model_selection import train_test_split
 from jasmine.datasets import generate_regression
 
 def main():
@@ -46,6 +46,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
 
