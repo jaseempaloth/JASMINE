@@ -1,9 +1,8 @@
-import jax
 import jax.numpy as jnp
 from jasmine.datasets import generate_classification
 from jasmine.preprocessing import StandardScaler
-from jasmine.selection import train_test_split
-from jasmine.classification import KNNClassifier
+from jasmine.model_selection import train_test_split
+from jasmine.neighbors import KNNClassifier
 
 def knn_classifier():
     # Generate synthetic classification data

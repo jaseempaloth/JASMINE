@@ -1,10 +1,8 @@
-import jax
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
-from jasmine import LinearRegression
-from jasmine.metrics._regression import mean_squared_error, r2_score
-from jasmine.datasets.generators import generate_polynomial
-from jasmine.selection import train_test_split
+from jasmine.linear_model import LinearRegression
+from jasmine.datasets import generate_polynomial
+from jasmine.model_selection import train_test_split
 
 def main():
     # Define parameters for data generation - REDUCED for stability
@@ -101,7 +99,7 @@ def main():
     plt.tight_layout()
     plt.show()
     
-    print(f"\n Visualization completed!")
+    print("\nVisualization completed!")
     print(f"The red curve shows the learned polynomial relationship")
     print(f"R² = {r2:.4f} indicates {r2*100:.1f}% of variance explained")
 

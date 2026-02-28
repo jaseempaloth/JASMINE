@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jasmine"
+version = "0.1.0"
+description = "JASMINE (JAX Accelerated Statistical Models and Integrated Neural Engine) - A lightweight, high-performance machine learning library built on JAX with GPU/TPU acceleration support for scalable ML workflows."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name = "Jaseem Paloth", email = "jaseem@jaseempaloth.com" }
+]
+keywords = [
+  "machine learning",
+  "jax",
+  "neural networks",
+  "linear regression",
+  "logistic regression",
+  "gpu acceleration"
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
+dependencies = [
+  "jax>=0.4.0",
+  "jaxlib>=0.4.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=6.0",
+  "black>=22.0",
+  "flake8>=4.0",
+  "sphinx>=4.0"
+]
+examples = [
+  "matplotlib>=3.3.0",
+  "scikit-learn>=1.0.0",
+  "jupyter>=1.0.0"
+]
+all = [
+  "pytest>=6.0",
+  "black>=22.0",
+  "flake8>=4.0",
+  "sphinx>=4.0",
+  "matplotlib>=3.3.0",
+  "scikit-learn>=1.0.0",
+  "jupyter>=1.0.0"
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/jaseempaloth/JASMINE/issues"
+"Documentation" = "https://jasmine.readthedocs.io"
+"Source Code" = "https://github.com/jaseempaloth/JASMINE"
+"Homepage" = "https://jasmine.readthedocs.io"
+
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
+
+[tool.setuptools.packages.find]
+include = ["jasmine*"]

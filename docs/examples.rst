@@ -12,10 +12,10 @@ Example 1: Linear Regression with Cross-Validation
 .. code-block:: python
 
    import jax.numpy as jnp
-   from jasmine.regression import LinearRegression
+   from jasmine.linear_model import LinearRegression
    from jasmine.preprocessing import StandardScaler
    from jasmine.datasets import generate_regression
-   from jasmine.selection import train_test_split
+   from jasmine.model_selection import train_test_split
    import matplotlib.pyplot as plt
 
    # Generate realistic dataset
@@ -59,7 +59,7 @@ Example 2: Multi-class Classification
 
 .. code-block:: python
 
-   from jasmine.classification import LogisticRegression
+   from jasmine.linear_model import LogisticRegression
    from jasmine.datasets import generate_classification
    from jasmine.metrics import accuracy_score
    import jax.numpy as jnp
@@ -111,7 +111,7 @@ Example 3: Regularization Comparison
 .. code-block:: python
 
    import matplotlib.pyplot as plt
-   from jasmine.regression import LinearRegression
+   from jasmine.linear_model import LinearRegression
    from jasmine.metrics import mean_squared_error
 
    # Generate data with multicollinearity

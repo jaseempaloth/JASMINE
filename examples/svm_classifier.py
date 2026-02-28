@@ -1,8 +1,7 @@
-import jax
 import jax.numpy as jnp
-from jasmine import SVMClassifier
+from jasmine.svm import SVMClassifier
 from jasmine.datasets import generate_classification
-from jasmine.selection import train_test_split
+from jasmine.model_selection import train_test_split
 from jasmine.preprocessing import StandardScaler
 
 def main():
