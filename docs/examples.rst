@@ -111,7 +111,7 @@ Example 3: Regularization Comparison
 .. code-block:: python
 
    import matplotlib.pyplot as plt
-   from jasmine.linear_model import LinearRegression
+   from jasmine.linear_model import Lasso, LinearRegression, Ridge
    from jasmine.metrics import mean_squared_error
 
    # Generate data with multicollinearity
@@ -164,6 +164,13 @@ Example 3: Regularization Comparison
    plt.legend()
    plt.grid(True)
    plt.show()
+
+   # Dedicated regularized estimators
+   ridge = Ridge(alpha=0.1, learning_rate=0.01, n_epochs=2000)
+   ridge.train(X_train_scaled, y_train)
+
+   lasso = Lasso(alpha=0.01, learning_rate=0.01, n_epochs=2000)
+   lasso.train(X_train_scaled, y_train)
 
 Example 4: Learning Curve Analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

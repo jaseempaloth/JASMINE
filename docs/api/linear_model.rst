@@ -1,7 +1,7 @@
 Linear Models
 =============
 
-The :mod:`jasmine.linear_model` module provides linear and logistic regression models.
+The :mod:`jasmine.linear_model` module provides linear, ridge, lasso, and logistic regression models.
 
 .. currentmodule:: jasmine.linear_model
 
@@ -14,3 +14,5 @@ Classes
 
    LinearRegression
    LogisticRegression
+   Ridge
+   Lasso

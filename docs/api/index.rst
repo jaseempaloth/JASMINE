@@ -22,7 +22,7 @@ Package Overview
 
 JASMINE is organized into several modules, each providing specific functionality:
 
-* :mod:`jasmine.linear_model` - Linear and logistic regression models
+* :mod:`jasmine.linear_model` - Linear, ridge, lasso, and logistic regression models
 * :mod:`jasmine.neighbors` - Nearest-neighbor classifiers
 * :mod:`jasmine.svm` - Support Vector Machine classifiers
 * :mod:`jasmine.preprocessing` - Data preprocessing utilities
@@ -41,6 +41,8 @@ Most Common Classes
 
    jasmine.linear_model.LinearRegression
    jasmine.linear_model.LogisticRegression
+   jasmine.linear_model.Ridge
+   jasmine.linear_model.Lasso
    jasmine.neighbors.KNNClassifier
    jasmine.svm.SVMClassifier
    jasmine.preprocessing.StandardScaler
