@@ -22,7 +22,7 @@ __email__ = 'jaseem@jaseempaloth.com'
 __license__ = 'MIT'
 
 # Core imports
-from .linear_model import LinearRegression, LogisticRegression
+from .linear_model import Lasso, LinearRegression, LogisticRegression, Ridge
 from .neighbors import KNNClassifier
 from .svm import SVMClassifier
 from .metrics import mean_squared_error, mean_absolute_error, root_mean_squared_error, r2_score, \
@@ -32,8 +32,10 @@ from .datasets import generate_regression, generate_polynomial, generate_classif
 from .preprocessing import StandardScaler, OneHotEncoder
 # Public API
 __all__ = [
+    'Lasso',
     'LinearRegression',
     'LogisticRegression',
+    'Ridge',
     'KNNClassifier',
     'SVMClassifier',
     'train_test_split',
