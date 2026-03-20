@@ -1,15 +1,17 @@
 import jax.numpy as jnp
 import numpy as np
 
-from jasmine.linear_model import LinearRegression, LogisticRegression
+from jasmine.linear_model import Lasso, LinearRegression, LogisticRegression, Ridge
 from jasmine.neighbors import KNNClassifier
 from jasmine.svm import SVMClassifier
 from jasmine.model_selection import train_test_split
 from jasmine.preprocessing import OneHotEncoder, StandardScaler
 from jasmine.datasets import generate_regression
 from jasmine import (
+    Lasso as PublicLasso,
     LinearRegression as PublicLinearRegression,
     LogisticRegression as PublicLogisticRegression,
+    Ridge as PublicRidge,
     KNNClassifier as PublicKNNClassifier,
     SVMClassifier as PublicSVMClassifier,
     train_test_split as PublicTrainTestSplit,
@@ -17,8 +19,10 @@ from jasmine import (
 
 
 def test_public_api_exports_match_canonical_modules():
+    assert PublicLasso is Lasso
     assert PublicLinearRegression is LinearRegression
     assert PublicLogisticRegression is LogisticRegression
+    assert PublicRidge is Ridge
     assert PublicKNNClassifier is KNNClassifier
     assert PublicSVMClassifier is SVMClassifier
     assert PublicTrainTestSplit is train_test_split
