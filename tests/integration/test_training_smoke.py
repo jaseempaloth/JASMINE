@@ -1,7 +1,7 @@
 import jax.numpy as jnp
 
 from jasmine.datasets import generate_classification, generate_regression
-from jasmine.linear_model import LinearRegression, LogisticRegression
+from jasmine.linear_model import Lasso, LinearRegression, LogisticRegression, Ridge
 from jasmine.model_selection import train_test_split
 from jasmine.neighbors import KNNClassifier
 from jasmine.svm import SVMClassifier
@@ -20,6 +20,16 @@ def test_model_training_and_inference_smoke():
     reg_history = reg.train(Xr_train, yr_train, verbose=0)
     assert len(reg_history["loss"]) >= 1
     assert reg.inference(Xr_test).shape[0] == Xr_test.shape[0]
+
+    ridge = Ridge(alpha=0.1, n_epochs=2, learning_rate=0.01)
+    ridge_history = ridge.train(Xr_train, yr_train, verbose=0)
+    assert len(ridge_history["loss"]) >= 1
+    assert ridge.inference(Xr_test).shape[0] == Xr_test.shape[0]
+
+    lasso = Lasso(alpha=0.1, n_epochs=2, learning_rate=0.01)
+    lasso_history = lasso.train(Xr_train, yr_train, verbose=0)
+    assert len(lasso_history["loss"]) >= 1
+    assert lasso.inference(Xr_test).shape[0] == Xr_test.shape[0]
 
     X_cls, y_cls = generate_classification(
         n_samples=40,
