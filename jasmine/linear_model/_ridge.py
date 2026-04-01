@@ -1,5 +1,5 @@
-from jasmine.linear_model.linear_regression import LinearRegression
-from jasmine.metrics import mean_squared_error
+from ._linear import LinearRegression
+from jasmine.losses import mse_loss
 
 
 class Ridge(LinearRegression):
@@ -11,7 +11,8 @@ class Ridge(LinearRegression):
         use_bias=True,
         learning_rate=0.01,
         n_epochs=1000,
-        loss_function=mean_squared_error,
+        loss_function=mse_loss,
+        optimizer=None,
     ):
         self.alpha = alpha
         super().__init__(
@@ -21,4 +22,5 @@ class Ridge(LinearRegression):
             loss_function=loss_function,
             l1_penalty=0.0,
             l2_penalty=alpha,
+            optimizer=optimizer,
         )

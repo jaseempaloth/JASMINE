@@ -2,7 +2,7 @@ import jax.numpy as jnp
 import pytest
 
 from jasmine.linear_model import Lasso, LinearRegression, LogisticRegression, Ridge
-from jasmine.linear_model.base import BaseLinearModel, BinaryClassifierMixin, RegressorMixin
+from jasmine.linear_model._base import BaseLinearModel, BinaryClassifierMixin, RegressorMixin
 
 
 def test_linear_models_inherit_shared_linear_model_base():

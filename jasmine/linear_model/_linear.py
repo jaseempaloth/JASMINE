@@ -1,5 +1,5 @@
-from jasmine.linear_model.base import BaseLinearModel, RegressorMixin
-from jasmine.metrics import mean_squared_error
+from ._base import BaseLinearModel, RegressorMixin
+from jasmine.losses import mse_loss
 
 
 class LinearRegression(RegressorMixin, BaseLinearModel):
@@ -13,9 +13,10 @@ class LinearRegression(RegressorMixin, BaseLinearModel):
         use_bias=True,
         learning_rate=0.01,
         n_epochs=1000,
-        loss_function=mean_squared_error,
+        loss_function=mse_loss,
         l1_penalty=0.0,
         l2_penalty=0.0,
+        optimizer=None,
     ):
         super().__init__(
             use_bias=use_bias,
@@ -24,6 +25,7 @@ class LinearRegression(RegressorMixin, BaseLinearModel):
             loss_function=loss_function,
             l1_penalty=l1_penalty,
             l2_penalty=l2_penalty,
+            optimizer=optimizer,
         )
 
     def loss_fn(self, params, X, y):

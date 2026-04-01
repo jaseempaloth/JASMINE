@@ -3,8 +3,17 @@ import jax.numpy as jnp
 import os
 from typing import Optional, Tuple
 
-def generate_regression(n_samples=100, n_features=20, n_informative=10, noise=0.0,
-                    bias=0.0, shuffle=True, coef=False, random_state=None):
+
+def generate_regression(
+    n_samples=100,
+    n_features=20,
+    n_informative=10,
+    noise=0.0,
+    bias=0.0,
+    shuffle=True,
+    coef=False,
+    random_state=None,
+):
     """
     Generate a random regression problem with JAX.
 
@@ -30,11 +39,13 @@ def generate_regression(n_samples=100, n_features=20, n_informative=10, noise=0.
                If `coef` is True, returns (X, y, ground_truth_coefficients).
     """
     if n_informative > n_features:
-        raise ValueError(f"n_informative ({n_informative}) cannot be greater than n_features ({n_features})")
-    
+        raise ValueError(
+            f"n_informative ({n_informative}) cannot be greater than n_features ({n_features})"
+        )
+
     # If no seed is provided, use a secure source of randomness
     if random_state is None:
-        random_state = int.from_bytes(os.urandom(4), 'big') 
+        random_state = int.from_bytes(os.urandom(4), "big")
 
     key = jax.random.PRNGKey(random_state)
     x_key, w_key, noise_key, shuffle_key = jax.random.split(key, 4)
@@ -42,7 +53,7 @@ def generate_regression(n_samples=100, n_features=20, n_informative=10, noise=0.
     X = jax.random.normal(x_key, (n_samples, n_features))
 
     ground_truth = jnp.zeros(n_features)
-    informative_weights = 100 * jax.random.normal(w_key, (n_informative,)) 
+    informative_weights = 100 * jax.random.normal(w_key, (n_informative,))
 
     if shuffle:
         indices = jax.random.permutation(shuffle_key, jnp.arange(n_features))
@@ -60,13 +71,16 @@ def generate_regression(n_samples=100, n_features=20, n_informative=10, noise=0.
         return X, y, ground_truth, bias
     else:
         return X, y
-    
-def generate_polynomial(n_samples: int = 100,
-                        degree: int = 2,
-                        noise: float = 0.0,
-                        bias: float = 0.0,
-                        coef: bool = False,
-                        random_state: Optional[int] = None):
+
+
+def generate_polynomial(
+    n_samples: int = 100,
+    degree: int = 2,
+    noise: float = 0.0,
+    bias: float = 0.0,
+    coef: bool = False,
+    random_state: Optional[int] = None,
+):
     """
     Generate a polynomial regression problem with one feature.
 
@@ -83,7 +97,7 @@ def generate_polynomial(n_samples: int = 100,
         If `coef` is True, returns (X, y, ground_truth_coefficients, bias).
     """
     if random_state is None:
-        random_state = int.from_bytes(os.urandom(4), 'big')
+        random_state = int.from_bytes(os.urandom(4), "big")
 
     key = jax.random.PRNGKey(random_state)
     x_key, w_key, noise_key = jax.random.split(key, 3)
@@ -93,11 +107,11 @@ def generate_polynomial(n_samples: int = 100,
     X = jnp.sort(X, axis=0)
 
     # Generate true coefficients for the polynomial terms (x, x^2, ..., x^degree)
-    true_coefficients = jax.random.normal(w_key, (degree, )) * 5 
+    true_coefficients = jax.random.normal(w_key, (degree,)) * 5
 
     # Create the polynomial features from the original feature X
     powers = jnp.arange(1, degree + 1)
-    X_poly_features = X ** powers 
+    X_poly_features = X**powers
 
     # Calculate y using the polynomial equation: y = (w1*x + w2*x^2 + ...) + bias
     y = X_poly_features @ true_coefficients + bias
@@ -110,16 +124,19 @@ def generate_polynomial(n_samples: int = 100,
     else:
         return X, y
 
-def generate_classification(n_samples: int = 100,
-                            n_features: int = 20,
-                            n_informative: int = 5,
-                            n_redundant: int = 2,
-                            n_classes: int = 2,
-                            class_sep: float = 1.0,
-                            feature_noise: float = 1.0,
-                            redundant_noise: float = 0.0,
-                            shuffle: bool = True,
-                            random_state: Optional[int] = None) -> Tuple[jnp.ndarray, jnp.ndarray]:
+
+def generate_classification(
+    n_samples: int = 100,
+    n_features: int = 20,
+    n_informative: int = 5,
+    n_redundant: int = 2,
+    n_classes: int = 2,
+    class_sep: float = 1.0,
+    feature_noise: float = 1.0,
+    redundant_noise: float = 0.0,
+    shuffle: bool = True,
+    random_state: Optional[int] = None,
+) -> Tuple[jnp.ndarray, jnp.ndarray]:
     """
     Generate a random n-class classification problem with.
 
@@ -158,11 +175,14 @@ def generate_classification(n_samples: int = 100,
     if redundant_noise < 0:
         raise ValueError(f"redundant_noise must be non-negative, got {redundant_noise}")
     if n_informative + n_redundant > n_features:
-        raise ValueError(f"n_informative ({n_informative}) + n_redundant ({n_redundant}) cannot be greater than n_features ({n_features})")
-    
+        raise ValueError(
+            f"n_informative ({n_informative}) + n_redundant ({n_redundant}) "
+            f"cannot be greater than n_features ({n_features})"
+        )
+
     if random_state is None:
-        random_state = int.from_bytes(os.urandom(4), 'big')
-    
+        random_state = int.from_bytes(os.urandom(4), "big")
+
     main_key = jax.random.PRNGKey(random_state)
     keys = jax.random.split(main_key, 6)
     centroid_key, class_key, noise_key, redundant_key, redundant_noise_key, shuffle_key = keys
@@ -172,9 +192,7 @@ def generate_classification(n_samples: int = 100,
     if n_informative > 0:
         # Create informative centroids at hypercube vertices
         informative_centroids = jax.random.choice(
-            centroid_key,
-            jnp.array([-class_sep, class_sep]),
-            shape=(n_classes, n_informative)
+            centroid_key, jnp.array([-class_sep, class_sep]), shape=(n_classes, n_informative)
         )
         centroids = centroids.at[:, :n_informative].set(informative_centroids)
 
@@ -202,14 +220,13 @@ def generate_classification(n_samples: int = 100,
 
         # Add noise to redundant features if specified
         if redundant_noise > 0:
-            redundant_noise_vals = jax.random.normal(
-                redundant_noise_key,
-                (n_samples, n_redundant) 
-            ) * redundant_noise
+            redundant_noise_vals = (
+                jax.random.normal(redundant_noise_key, (n_samples, n_redundant)) * redundant_noise
+            )
             redundant_features = redundant_features + redundant_noise_vals
-        
-        X = X.at[:, n_informative:n_informative + n_redundant].set(redundant_features)
-        
+
+        X = X.at[:, n_informative : n_informative + n_redundant].set(redundant_features)
+
     # Fill remaining features with pure noise
     n_noise = n_features - n_informative - n_redundant
     if n_noise > 0:
@@ -217,7 +234,7 @@ def generate_classification(n_samples: int = 100,
         noise_key_final = jax.random.fold_in(noise_key, 1)
         noise_features = jax.random.normal(noise_key_final, (n_samples, n_noise))
         X = X.at[:, -n_noise:].set(noise_features)
-    
+
     # Shuffle features to avoid position bias
     if shuffle:
         # Shuffle along axis=1 (features), not axis=0 (samples)
@@ -225,6 +242,3 @@ def generate_classification(n_samples: int = 100,
         X = X[:, feature_indices]
 
     return X, y
-
-        
-

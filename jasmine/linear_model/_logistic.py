@@ -2,8 +2,8 @@ import os
 
 import jax
 
-from jasmine.linear_model.base import BaseLinearModel, BinaryClassifierMixin
-from jasmine.metrics import binary_cross_entropy
+from ._base import BaseLinearModel, BinaryClassifierMixin
+from jasmine.losses import bce_loss
 
 
 class LogisticRegression(BinaryClassifierMixin, BaseLinearModel):
@@ -16,9 +16,10 @@ class LogisticRegression(BinaryClassifierMixin, BaseLinearModel):
         use_bias=True,
         learning_rate=0.01,
         n_epochs=1000,
-        loss_function=binary_cross_entropy,
+        loss_function=bce_loss,
         l1_penalty=0.0,
         l2_penalty=0.0,
+        optimizer=None,
     ):
         super().__init__(
             use_bias=use_bias,
@@ -27,6 +28,7 @@ class LogisticRegression(BinaryClassifierMixin, BaseLinearModel):
             loss_function=loss_function,
             l1_penalty=l1_penalty,
             l2_penalty=l2_penalty,
+            optimizer=optimizer,
         )
 
     def _initialization_key(self):

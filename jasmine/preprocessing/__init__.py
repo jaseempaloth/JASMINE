@@ -1,5 +1,4 @@
-from .scaler import StandardScaler
-from .one_hot_encoder import OneHotEncoder
+from ._scaler import StandardScaler
+from ._encoder import OneHotEncoder
 
-__all__ = ["StandardScaler",
-           "OneHotEncoder"]
+__all__ = ["StandardScaler", "OneHotEncoder"]

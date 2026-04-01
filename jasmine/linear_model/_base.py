@@ -10,6 +10,12 @@ import jax.nn
 import jax.numpy as jnp
 
 from jasmine.metrics import accuracy_score, r2_score
+from jasmine.utils._validation import (
+    validate_1d_array,
+    validate_2d_array,
+    validate_fitted,
+    validate_matching_samples,
+)
 
 
 class BaseLinearModel(ABC):
@@ -27,6 +33,7 @@ class BaseLinearModel(ABC):
         loss_function=None,
         l1_penalty=0.0,
         l2_penalty=0.0,
+        optimizer=None,
     ):
         self.use_bias = use_bias
         self.learning_rate = learning_rate
@@ -34,6 +41,7 @@ class BaseLinearModel(ABC):
         self.loss_function = loss_function
         self.l1_penalty = l1_penalty
         self.l2_penalty = l2_penalty
+        self.optimizer = optimizer
         self.params = None
 
     def _initialization_key(self):
@@ -75,10 +83,7 @@ class BaseLinearModel(ABC):
         return penalty
 
     def _require_fitted(self, method_name):
-        if self.params is None:
-            raise ValueError(
-                f"Model has not been trained yet. Call `train` before calling `{method_name}`."
-            )
+        validate_fitted(self.params, method_name)
 
     def _preprocess_training_data(self, X, y):
         """Center features, and optionally targets, when fitting a bias term."""
@@ -139,14 +144,9 @@ class BaseLinearModel(ABC):
 
     @staticmethod
     def _validate_training_data(X, y):
-        if X.ndim != 2:
-            raise ValueError(f"Input features X must be a 2D array, got shape {X.shape}.")
-        if y.ndim != 1:
-            raise ValueError(f"Target values y must be a 1D array, got shape {y.shape}.")
-        if X.shape[0] != y.shape[0]:
-            raise ValueError(
-                f"Number of samples in X ({X.shape[0]}) must match number of samples in y ({y.shape[0]})."
-            )
+        validate_2d_array(X, "X")
+        validate_1d_array(y, "y")
+        validate_matching_samples(X, y)
 
     @classmethod
     def _validate_validation_data(cls, validation_data, n_features):
@@ -205,13 +205,33 @@ class BaseLinearModel(ABC):
         best_val_loss = float("inf")
         epochs_no_improve = 0
         best_params = None
-        update_step = self._make_update_step()
+
+        if self.optimizer is not None:
+            opt_state = self.optimizer.init(current_params)
+
+            @jax.jit
+            def update_step_with_opt(params, state, X, y):
+                grads = jax.grad(self.loss_fn)(params, X, y)
+                updates, new_state = self.optimizer.update(grads, state)
+                new_params = jax.tree_util.tree_map(lambda p, u: p - u, params, updates)
+                return new_params, new_state
+
+        else:
+            update_step = self._make_update_step()
 
         start_time = time.time()
         print_interval = 1 if self.log_every_epoch else max(1, self.n_epochs // 10)
 
         for epoch in range(self.n_epochs):
-            current_params = update_step(current_params, X_train, y_train)
+            if self.optimizer is not None:
+                current_params, opt_state = update_step_with_opt(
+                    current_params,
+                    opt_state,
+                    X_train,
+                    y_train,
+                )
+            else:
+                current_params = update_step(current_params, X_train, y_train)
             train_loss = self.loss_fn(current_params, X_train, y_train)
 
             if self.stop_on_invalid_loss and bool(jnp.isnan(train_loss) | jnp.isinf(train_loss)):
@@ -238,7 +258,8 @@ class BaseLinearModel(ABC):
                     if epochs_no_improve >= early_stopping_patience:
                         if verbose > 0:
                             print(
-                                f"Early stopping at epoch {epoch + 1}. Best Val Loss: {float(best_val_loss):.4f}"
+                                f"Early stopping at epoch {epoch + 1}. "
+                                f"Best Val Loss: {float(best_val_loss):.4f}"
                             )
                         final_params = best_params if best_params is not None else current_params
                         self.params = self._set_intercept(final_params, X_offset, y_offset)
