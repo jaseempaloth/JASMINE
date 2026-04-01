@@ -1,6 +1,6 @@
 # JASMINE - JAX Accelerated Statistical Models and Integrated Neural Engine
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![JAX](https://img.shields.io/badge/JAX-latest-orange.svg)](https://github.com/google/jax)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-jasmine-brightgreen.svg)](https://jasmine-ml.readthedocs.io)
@@ -43,11 +43,29 @@ print(f"Accuracy: {accuracy:.3f}")
 
 ## Installation
 
+### Installation with `uv`
+
 ```bash
 git clone https://github.com/jaseempaloth/JASMINE.git
 cd JASMINE
-pip install -r requirements.txt
-pip install -e .
+uv sync
+```
+
+Common commands:
+
+```bash
+uv run pytest
+uv run flake8 jasmine tests
+uv run mypy jasmine/
+uv run black --check jasmine tests
+```
+
+Available dependency groups:
+
+```bash
+uv sync --group docs
+uv sync --group examples
+uv sync --all-groups
 ```
 
 ## Documentation
@@ -63,9 +81,8 @@ pip install -e .
 ### Rebuild docs locally
 
 ```bash
-pip install -r docs/requirements.txt
-pip install -e .[dev]
-sphinx-build -b html -E -a docs docs/_build/html
+uv sync --group docs
+uv run sphinx-build -b html -E -a docs docs/_build/html
 ```
 
 Build output is written to `docs/_build/html/` (open `docs/_build/html/index.html`).
@@ -76,7 +93,7 @@ Notes:
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.9+
 - JAX >= 0.4.0
 
 ## License

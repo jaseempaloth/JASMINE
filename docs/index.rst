@@ -4,9 +4,9 @@ Welcome to JASMINE's Documentation
 **JASMINE** (JAX Accelerated Statistical Models and Integrated Neural Engine)
 is a machine learning library built on JAX for accelerated statistical modeling.
 
-.. image:: https://img.shields.io/badge/python-3.8+-blue.svg
+.. image:: https://img.shields.io/badge/python-3.9+-blue.svg
    :target: https://www.python.org/downloads/
-   :alt: Python 3.8+
+   :alt: Python 3.9+
 
 .. image:: https://img.shields.io/badge/JAX-latest-orange.svg
    :target: https://github.com/google/jax

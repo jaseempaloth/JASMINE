@@ -6,8 +6,8 @@ Development setup
 
 .. code-block:: bash
 
-   pip install -e .[dev]
-   pytest
+   uv sync
+   uv run pytest
 
 Guidelines
 ----------

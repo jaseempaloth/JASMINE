@@ -4,7 +4,7 @@ Installation
 Requirements
 ------------
 
-* Python 3.8+
+* Python 3.9+
 * JAX and jaxlib
 
 Install from source
@@ -14,14 +14,13 @@ Install from source
 
    git clone https://github.com/jaseempaloth/JASMINE.git
    cd JASMINE
-   pip install -r requirements.txt
-   pip install -e .
+   uv sync
 
 Optional extras
 ---------------
 
 .. code-block:: bash
 
-   pip install .[dev]
-   pip install .[examples]
-   pip install .[all]
+   uv sync --group dev
+   uv sync --group examples
+   uv sync --all-groups

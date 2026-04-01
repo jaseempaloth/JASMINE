@@ -1,13 +1,16 @@
 import jax.numpy as jnp
 import numpy as np
 
-from jasmine.linear_model import Lasso, LinearRegression, LogisticRegression, Ridge
+from jasmine.linear_model import ElasticNet, Lasso, LinearRegression, LogisticRegression, Ridge
+from jasmine.losses import bce_loss, hinge_loss, mse_loss
 from jasmine.neighbors import KNNClassifier
+from jasmine.optim import Adam, Momentum, SGD
 from jasmine.svm import SVMClassifier
 from jasmine.model_selection import train_test_split
 from jasmine.preprocessing import OneHotEncoder, StandardScaler
 from jasmine.datasets import generate_regression
 from jasmine import (
+    ElasticNet as PublicElasticNet,
     Lasso as PublicLasso,
     LinearRegression as PublicLinearRegression,
     LogisticRegression as PublicLogisticRegression,
@@ -15,10 +18,17 @@ from jasmine import (
     KNNClassifier as PublicKNNClassifier,
     SVMClassifier as PublicSVMClassifier,
     train_test_split as PublicTrainTestSplit,
+    SGD as PublicSGD,
+    Momentum as PublicMomentum,
+    Adam as PublicAdam,
+    mse_loss as PublicMseLoss,
+    bce_loss as PublicBceLoss,
+    hinge_loss as PublicHingeLoss,
 )
 
 
 def test_public_api_exports_match_canonical_modules():
+    assert PublicElasticNet is ElasticNet
     assert PublicLasso is Lasso
     assert PublicLinearRegression is LinearRegression
     assert PublicLogisticRegression is LogisticRegression
@@ -26,6 +36,12 @@ def test_public_api_exports_match_canonical_modules():
     assert PublicKNNClassifier is KNNClassifier
     assert PublicSVMClassifier is SVMClassifier
     assert PublicTrainTestSplit is train_test_split
+    assert PublicSGD is SGD
+    assert PublicMomentum is Momentum
+    assert PublicAdam is Adam
+    assert PublicMseLoss is mse_loss
+    assert PublicBceLoss is bce_loss
+    assert PublicHingeLoss is hinge_loss
 
 
 def test_dataset_split_and_preprocessing_components():

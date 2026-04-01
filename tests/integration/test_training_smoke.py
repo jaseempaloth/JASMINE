@@ -4,6 +4,7 @@ from jasmine.datasets import generate_classification, generate_regression
 from jasmine.linear_model import Lasso, LinearRegression, LogisticRegression, Ridge
 from jasmine.model_selection import train_test_split
 from jasmine.neighbors import KNNClassifier
+from jasmine.optim import Adam, Momentum, SGD
 from jasmine.svm import SVMClassifier
 
 
@@ -54,3 +55,18 @@ def test_model_training_and_inference_smoke():
     svm_history = svm.train(Xc_train, y_svm, verbose=0)
     assert len(svm_history["loss"]) >= 1
     assert svm.inference(Xc_test).shape[0] == Xc_test.shape[0]
+
+
+def test_model_trains_with_each_optimizer():
+    X, y = generate_regression(n_samples=40, n_features=4, n_informative=2, random_state=7)
+    X_train, X_test, y_train, _ = train_test_split(X, y, test_size=0.25, random_state=7)
+
+    for optimizer_class, kwargs in [
+        (SGD, {"learning_rate": 0.01}),
+        (Momentum, {"learning_rate": 0.01, "beta": 0.9}),
+        (Adam, {"learning_rate": 0.001}),
+    ]:
+        model = LinearRegression(n_epochs=5, optimizer=optimizer_class(**kwargs))
+        history = model.train(X_train, y_train, verbose=0)
+        assert len(history["loss"]) == 5
+        assert model.inference(X_test).shape[0] == X_test.shape[0]
