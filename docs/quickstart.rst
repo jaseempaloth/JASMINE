@@ -5,8 +5,7 @@ Install dependencies and package:
 
 .. code-block:: bash
 
-   pip install -r requirements.txt
-   pip install -e .
+   uv sync
 
 Train a regression model:
 

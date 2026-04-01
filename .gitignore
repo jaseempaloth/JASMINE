@@ -62,3 +62,4 @@ docs/api/generated/
 *.pkl
 *.npy
 .venv
+.uv-cache/
